@@ -5,13 +5,13 @@ import {
   CreateDateColumn,
 } from 'typeorm';
 
-@Entity('permissions')
-export class Permission {
+@Entity('departments')
+export class Department {
   @PrimaryGeneratedColumn('increment')
-  PermissionID: number;
+  DepartmentID: number;
 
   @Column({ unique: true, length: 50 })
-  PermissionName: string;
+  DepartmentName: string;
 
   @Column({ nullable: true, length: 255 })
   Description: string;
