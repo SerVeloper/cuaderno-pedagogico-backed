@@ -34,6 +34,8 @@ $ npm install
 ## Compile and run the project
 
 ```bash
+$ npm run build
+
 # development
 $ npm run start
 
@@ -56,6 +58,22 @@ $ npm run test:e2e
 # test coverage
 $ npm run test:cov
 ```
+
+## Create migations
+```bash
+# run migration just NestJS
+$ npx typeorm migration:create src/database/migrations/NombreDeLaMigracion
+
+
+
+```
+## Run migrations
+```bash 
+$ npm run migration:run
+
+```
+
+
 
 ## Deployment
 

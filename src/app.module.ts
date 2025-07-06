@@ -1,10 +1,22 @@
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { Module } from "@nestjs/common";
+import { AuthModule } from "./auth/auth.module";
+import { DatabaseModule } from "./database/database.module";
+import { RoleModule } from "./roles/role.module";
+import { PermissionModule } from "./permissions/permission.module";
+import { PassportModule } from "@nestjs/passport";
+import { JwtModule } from "@nestjs/jwt";
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    DatabaseModule,
+    AuthModule,
+    RoleModule,
+    PermissionModule,
+    PassportModule.register({ defaultStrategy: "jwt" }),
+    JwtModule.register({
+      secret: "your-secret-key",
+      signOptions: { expiresIn: "1h" },
+    }),
+  ],
 })
 export class AppModule {}
