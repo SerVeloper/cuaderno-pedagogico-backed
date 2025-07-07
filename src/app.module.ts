@@ -1,10 +1,11 @@
-import { Module } from "@nestjs/common";
-import { AuthModule } from "./auth/auth.module";
-import { DatabaseModule } from "./database/database.module";
-import { RoleModule } from "./roles/role.module";
-import { PermissionModule } from "./permissions/permission.module";
-import { PassportModule } from "@nestjs/passport";
-import { JwtModule } from "@nestjs/jwt";
+import { Module } from '@nestjs/common';
+import { AuthModule } from './auth/auth.module';
+import { DatabaseModule } from './database/database.module';
+import { RoleModule } from './roles/role.module';
+import { PermissionModule } from './permissions/permission.module';
+import { DepartmentModule } from './departments/department.module';
+import { PassportModule } from '@nestjs/passport';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -12,10 +13,11 @@ import { JwtModule } from "@nestjs/jwt";
     AuthModule,
     RoleModule,
     PermissionModule,
-    PassportModule.register({ defaultStrategy: "jwt" }),
+    DepartmentModule,
+    PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
-      secret: "your-secret-key",
-      signOptions: { expiresIn: "1h" },
+      secret: 'your-secret-key',
+      signOptions: { expiresIn: '1h' },
     }),
   ],
 })

@@ -1,5 +1,5 @@
-import { Role } from "../entities/role.entity";
-import { CreateRoleDto } from "../../application/dtos/role.dto";
+import { Role } from '../entities/role.entity';
+import { CreateRoleDto } from '../../application/dtos/role.dto';
 
 export interface RoleRepositoryInterface {
   create(createRoleDto: CreateRoleDto): Promise<Role>;

@@ -1,9 +1,9 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 
-export class CreatePermissionDto {
+export class CreateDepartmentDto {
   @IsNotEmpty()
   @IsString()
-  PermissionName: string;
+  DepartmentName: string;
 
   @IsString()
   Description?: string;
