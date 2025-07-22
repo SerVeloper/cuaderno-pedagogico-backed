@@ -18,6 +18,7 @@ export const AppDataSource = new DataSource({
   entities: ['dist/**/*.entity{.ts,.js}'],
   migrations: ['dist/database/migrations/*{.ts,.js}'],
   seeds: ['dist/database/seeds/*{.ts,.js}'],
+
   synchronize: false,
   migrationsRun: true,
   namingStrategy: new SnakeNamingStrategy(),

@@ -23,6 +23,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         synchronize: false,
         migrationsRun: true,
       }),
+
     }),
   ],
 })
