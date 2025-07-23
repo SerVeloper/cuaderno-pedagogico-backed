@@ -4,7 +4,9 @@ import { DatabaseModule } from './database/database.module';
 import { RoleModule } from './roles/role.module';
 import { PermissionModule } from './permissions/permission.module';
 import { DepartmentModule } from './departments/department.module';
+import { TermsAndConditionsModule } from './terms_and_conditions/terms_and_conditions.module';
 import { PassportModule } from '@nestjs/passport';
+import { CommonModule } from './common/common.module';
 import { JwtModule } from '@nestjs/jwt';
 
 @Module({
@@ -14,7 +16,9 @@ import { JwtModule } from '@nestjs/jwt';
     RoleModule,
     PermissionModule,
     DepartmentModule,
+    TermsAndConditionsModule,
     PassportModule.register({ defaultStrategy: 'jwt' }),
+    CommonModule,
     JwtModule.register({
       secret: 'your-secret-key',
       signOptions: { expiresIn: '1h' },

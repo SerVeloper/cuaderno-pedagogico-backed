@@ -1,19 +1,29 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'serdev',
-      password: 'nifer2030',
-      database: 'cuaderno_pedagogico',
-      entities: ['dist/**/*.entity{.ts,.js}'],
-      migrations: ['dist/database/migrations/*{.ts,.js}'],
-      synchronize: false,
-      migrationsRun: true,
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: '.env', 
+    }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        type: configService.get<string>('DB_TYPE') as 'postgres',
+        host: configService.get<string>('DB_HOST'),
+        port: configService.get<number>('DB_PORT'),
+        username: configService.get<string>('DB_USERNAME'),
+        password: configService.get<string>('DB_PASSWORD'),
+        database: configService.get<string>('DB_DATABASE'),
+        entities: ['dist/**/*.entity{.ts,.js}'],
+        migrations: ['dist/database/migrations/*{.ts,.js}'],
+        synchronize: false,
+        migrationsRun: true,
+      }),
+
     }),
   ],
 })
