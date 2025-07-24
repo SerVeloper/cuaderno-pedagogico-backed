@@ -26,4 +26,20 @@ export class TermsAndConditionsController {
   findAll() {
     return this.termAndConditionsService.findAll();
   }
+  @Get(':id')
+  findOne(@Param('id') id: number) {
+    return this.termAndConditionsService.findOne(id);
+  }
+  @Put(':id')
+  update(
+    @Param('id') id: number,
+    @Body() updateTermsAndConditionsDto: CreateTermsAndConditionsDto,
+  ) {
+    return this.termAndConditionsService.update(id, updateTermsAndConditionsDto);
+  }
+  @Delete(':id')
+  delete(@Param('id') id: number) {
+    return this.termAndConditionsService.delete(id);
+  }
+
 }

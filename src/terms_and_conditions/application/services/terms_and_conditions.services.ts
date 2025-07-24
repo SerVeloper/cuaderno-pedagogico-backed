@@ -11,26 +11,26 @@ export class TermsAndConditionsService {
 
   async create(
     createTermsAndConditionsDto: CreateTermsAndConditionsDto,
-  ): Promise<TermsAndConditions> { // Cambiar void a TermsAndConditions
+  ): Promise<TermsAndConditions> { 
     return this.termsAndConditionsRepository.create(createTermsAndConditionsDto);
   }
 
-  async findAll(): Promise<TermsAndConditions[]> { // Cambiar void a TermsAndConditions[]
+  async findAll(): Promise<TermsAndConditions[]> { []
     return this.termsAndConditionsRepository.findAll();
   }
 
-  async findOne(id: number): Promise<TermsAndConditions | null> { // Cambiar void a TermsAndConditions | null
+  async findOne(id: number): Promise<TermsAndConditions | null> {  
     return this.termsAndConditionsRepository.findOne(id);
   }
 
   async update(
     id: number,
     updateTermsAndConditionsDto: CreateTermsAndConditionsDto,
-  ): Promise<TermsAndConditions> { // Cambiar void a TermsAndConditions
+  ): Promise<TermsAndConditions> { 
     return this.termsAndConditionsRepository.update(id, updateTermsAndConditionsDto);
   }
 
-  async delete(id: number): Promise<void> { // Este está correcto
+  async delete(id: number): Promise<void> { 
     return this.termsAndConditionsRepository.delete(id);
   }
 }

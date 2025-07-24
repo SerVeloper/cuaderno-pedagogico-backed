@@ -72,6 +72,11 @@ $ npx typeorm migration:create src/database/migrations/NombreDeLaMigracion
 $ npm run migration:run
 
 ```
+## drop and run migrations
+```bash 
+npm run schema:drop && npm run migration:run
+```
+
 
 
 
