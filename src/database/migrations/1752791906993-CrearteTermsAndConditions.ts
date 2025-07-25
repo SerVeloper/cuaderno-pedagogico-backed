@@ -30,14 +30,14 @@ export class CrearteTermsAndConditions1752791906993
             default: 'now()',
           },
         ],
-        foreignKeys: [
-          {
-            columnNames: ['UserID'],
-            referencedTableName: 'users',
-            referencedColumnNames: ['UserID'],
-            onDelete: 'CASCADE',
-          },
-        ],
+        // foreignKeys: [
+        //   {
+        //     columnNames: ['UserID'],
+        //     referencedTableName: 'users',
+        //     referencedColumnNames: ['UserID'],
+        //     onDelete: 'CASCADE',
+        //   },
+        // ],
       }),
     );
   }

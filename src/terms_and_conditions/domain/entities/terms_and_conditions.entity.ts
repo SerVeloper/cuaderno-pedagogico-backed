@@ -17,9 +17,6 @@ export class TermsAndConditions {
   @Column()
   UserID: number;
 
-  @ManyToOne(() => User)
-  @JoinColumn({ name: 'UserID' })
-  user: User;
 
   @Column({ length: 50 })
   Version: string;
