@@ -3,11 +3,7 @@ import {
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
-  
-  ManyToOne,
-  JoinColumn,
 } from 'typeorm';
-import { User } from '../../../auth/domain/entities/user.entity';
 
 @Entity('terms_and_conditions')
 export class TermsAndConditions {

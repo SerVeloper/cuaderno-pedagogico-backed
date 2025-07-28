@@ -11,7 +11,10 @@ export class PermissionService {
   ) {}
 
   async create(createPermissionDto: CreatePermissionDto): Promise<Permission> {
-    return this.permissionRepository.create(createPermissionDto);
+    const permission = new Permission();
+    permission.PermissionName = createPermissionDto.PermissionName;
+    permission.Description = createPermissionDto.Description || '';
+    return this.permissionRepository.create(permission);
   }
 
   async findAll(): Promise<Permission[]> {
@@ -26,7 +29,10 @@ export class PermissionService {
     id: number,
     updatePermissionDto: CreatePermissionDto,
   ): Promise<Permission> {
-    return this.permissionRepository.update(id, updatePermissionDto);
+    const permission = new Permission();
+    permission.PermissionName = updatePermissionDto.PermissionName;
+    permission.Description = updatePermissionDto.Description || '';
+    return this.permissionRepository.update(id, permission);
   }
 
   async delete(id: number): Promise<void> {
