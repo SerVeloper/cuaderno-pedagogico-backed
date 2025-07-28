@@ -16,10 +16,7 @@ import { Role } from '../roles/domain/entities/role.entity';
     }),
   ],
   controllers: [AuthController],
-  providers: [
-    AuthService,
-    { provide: 'AuthRepositoryInterface', useClass: AuthRepository },
-  ],
+  providers: [AuthService, { provide: 'AuthRepositoryInterface', useClass: AuthRepository }],
   exports: [AuthService],
 })
 export class AuthModule {}
