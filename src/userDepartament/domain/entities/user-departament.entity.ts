@@ -5,5 +5,4 @@ export class UserDepartament {
     public DepartamentID: number,
     public createdAt: Date,
   ) {}
-
 }
