@@ -6,6 +6,7 @@ import { PermissionModule } from './permissions/permission.module';
 import { DepartmentModule } from './departments/department.module';
 import { TermsAndConditionsModule } from './terms_and_conditions/terms_and_conditions.module';
 import {UserDepartamentModule} from './userDepartament/user-departament.module'
+import {EmailModule} from './emails/emails.module'
 import { PassportModule } from '@nestjs/passport';
 import { CommonModule } from './common/common.module';
 import { JwtModule } from '@nestjs/jwt';
@@ -19,6 +20,7 @@ import { JwtModule } from '@nestjs/jwt';
     DepartmentModule,
     TermsAndConditionsModule,
     UserDepartamentModule,
+    EmailModule,
     PassportModule.register({ defaultStrategy: 'jwt' }),
     CommonModule,
     JwtModule.register({
