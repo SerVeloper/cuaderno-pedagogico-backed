@@ -14,10 +14,10 @@ export class CreateDepartmentTable1751838391958 implements MigrationInterface {
             generationStrategy: 'increment',
           },
           {
-            name: 'DepartmentName',
+            name: 'Name',
             type: 'varchar',
             isUnique: true,
-            length: '50',
+            length: '100',
           },
           {
             name: 'Description',
@@ -25,7 +25,18 @@ export class CreateDepartmentTable1751838391958 implements MigrationInterface {
             isNullable: true,
             length: '255',
           },
-          { name: 'created_at', type: 'timestamp', default: 'now()' },
+          { name: 'IsActive', 
+            type: 'boolean', 
+            default: true 
+          },
+          { name: 'CreatedAt', 
+            type: 'timestamp', 
+            default: 'now()' 
+          },
+          { name: 'UpdatedAt', 
+            type: 'timestamp', 
+            default: 'now()' 
+          },
         ],
       }),
     );

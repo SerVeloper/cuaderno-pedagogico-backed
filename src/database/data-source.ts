@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
+import { PascalNamingStrategy } from './naming.strategy';
 import * as dotenv from 'dotenv';
 
 dotenv.config();
@@ -21,5 +21,6 @@ export const AppDataSource = new DataSource({
 
   synchronize: false,
   migrationsRun: true,
-  namingStrategy: new SnakeNamingStrategy(),
+  namingStrategy: new PascalNamingStrategy(),
+  entitySkipConstructor: true
 } as ExtendedDataSourceOptions & DataSource['options']);
