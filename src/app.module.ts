@@ -8,6 +8,7 @@ import { TermsAndConditionsModule } from './terms_and_conditions/terms_and_condi
 import {UserDepartamentModule} from './userDepartament/user-departament.module'
 import {EmailModule} from './emails/emails.module'
 import { PeriodModule } from './period/period.module';
+import { UserRoleModule } from './user-roles/user-role.module';
 import { PassportModule } from '@nestjs/passport';
 import { CommonModule } from './common/common.module';
 import { JwtModule } from '@nestjs/jwt';
@@ -23,6 +24,7 @@ import { JwtModule } from '@nestjs/jwt';
     UserDepartamentModule,
     EmailModule,
     PeriodModule,
+    UserRoleModule,
     PassportModule.register({ defaultStrategy: 'jwt' }),
     CommonModule,
     JwtModule.register({
