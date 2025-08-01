@@ -1,35 +1,31 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { DepartmentRepositoryInterface } from '../../domain/interfaces/department.repository.interface';
-import { CreateDepartmentDto } from '../dtos/department.dto';
-import { Department } from '../../domain/entities/department.entity';
+import { DepartmentsRepositoryInterface } from '../../domain/interfaces/department.repository.interface';
+import { DepartmentEntity } from '../../domain/entities/department.entity';
 
 @Injectable()
 export class DepartmentService {
   constructor(
-    @Inject('DepartmentRepositoryInterface')
-    private readonly departmentRepository: DepartmentRepositoryInterface,
+    @Inject('DepartmentsRepositoryInterface')
+    private readonly departmentRepositoryInterface: DepartmentsRepositoryInterface,
   ) {}
 
-  async create(createDepartmentDto: CreateDepartmentDto): Promise<Department> {
-    return this.departmentRepository.create(createDepartmentDto);
+  async create(departmentEntity: DepartmentEntity): Promise<DepartmentEntity> {
+    return this.departmentRepositoryInterface.create(departmentEntity);
   }
 
-  async findAll(): Promise<Department[]> {
-    return this.departmentRepository.findAll();
+  async findAll(): Promise<DepartmentEntity[]> {
+    return this.departmentRepositoryInterface.findAll();
   }
 
-  async findOne(id: number): Promise<Department | null> {
-    return this.departmentRepository.findOne(id);
+  async findById(id: number): Promise<DepartmentEntity | null> {
+    return this.departmentRepositoryInterface.findById(id);
   }
 
-  async update(
-    id: number,
-    updateDepartmentDto: CreateDepartmentDto,
-  ): Promise<Department> {
-    return this.departmentRepository.update(id, updateDepartmentDto);
+  async update(id: number, departmentEntity: DepartmentEntity): Promise<DepartmentEntity> {
+    return this.departmentRepositoryInterface.update(id, departmentEntity);
   }
 
   async delete(id: number): Promise<void> {
-    return this.departmentRepository.delete(id);
+    return this.departmentRepositoryInterface.delete(id);
   }
 }

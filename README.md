@@ -76,9 +76,10 @@ $ npm run migration:run
 ```bash 
 npm run schema:drop && npm run migration:run
 ```
-
-
-
+# run seed department
+```bash
+npm run seed:departments
+```
 
 ## Deployment
 

@@ -1,44 +1,47 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Put,
-  Delete,
-  Body,
-  Param,
-} from '@nestjs/common';
-import { DepartmentService } from '../../application/services/department.service';
-import { CreateDepartmentDto } from '../../application/dtos/department.dto';
+import { Controller, Get, Post, Put, Delete, Body, Param, ParseIntPipe } from '@nestjs/common';
+
+import { CreateDepartmentDto } from '../../application/dtos/create-department.dto';
+import { UpdateDepartmentDto } from '../../application/dtos/update-department.dto';
+
+import { CreateDepartmentUseCase } from '../../application/use-cases/create-department.use-case';
+import { FindAllDepartmentsUseCase } from '../../application/use-cases/find-all-departments.use-case';
+import { FindOneDepartmentUseCase } from '../../application/use-cases/find-one-department.use-case';
+import { UpdateDepartmentUseCase } from '../../application/use-cases/update-department.use-case';
+import { DeleteDepartmentUseCase } from '../../application/use-cases/delete-department.use-case';
 
 @Controller('departments')
 export class DepartmentController {
-  constructor(private readonly departmentService: DepartmentService) {}
+  constructor(
+    private readonly createDepartment: CreateDepartmentUseCase,
+    private readonly findAllDepartments: FindAllDepartmentsUseCase,
+    private readonly findOneDepartment: FindOneDepartmentUseCase,
+    private readonly updateDepartment: UpdateDepartmentUseCase,
+    private readonly deleteDepartment: DeleteDepartmentUseCase,
+  ) {}
 
   @Post()
-  create(@Body() createDepartmentDto: CreateDepartmentDto) {
-    return this.departmentService.create(createDepartmentDto);
+  create(@Body() dto: CreateDepartmentDto) {
+    return this.createDepartment.execute(dto);
   }
 
   @Get()
   findAll() {
-    return this.departmentService.findAll();
+    return this.findAllDepartments.execute();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.departmentService.findOne(+id);
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.findOneDepartment.execute(id);
   }
 
   @Put(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateDepartmentDto: CreateDepartmentDto,
-  ) {
-    return this.departmentService.update(+id, updateDepartmentDto);
+  async update(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateDepartmentDto) {
+    console.log('Updating department with ID:', id, 'with data:', dto);
+    return this.updateDepartment.execute(id, dto);
   }
 
   @Delete(':id')
-  delete(@Param('id') id: string) {
-    return this.departmentService.delete(+id);
+  delete(@Param('id', ParseIntPipe) id: number) {
+    return this.deleteDepartment.execute(id);
   }
 }

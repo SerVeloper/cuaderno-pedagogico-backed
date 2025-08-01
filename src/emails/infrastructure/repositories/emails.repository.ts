@@ -33,7 +33,7 @@ export class EmailRepository implements EmailsRepositoryInterface {
 
   async findAll(): Promise<Emails[]> {
     const entities = await this.repository.find();
-    return entities.map(this.toDomainEntity);
+    return entities.map(entity => this.toDomainEntity(entity));
   }
 
   async findOne(id: number): Promise<Emails | null> {

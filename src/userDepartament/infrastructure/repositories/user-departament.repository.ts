@@ -42,7 +42,7 @@ export class UserDepartamentRepository
 
   async findAll(): Promise<UserDepartament[]> {
     const entities = await this.repository.find();
-    return entities.map(this.toDomainEntity);
+    return entities.map(entity => this.toDomainEntity(entity));
   }
 
   async findOne(id: number): Promise<UserDepartament | null> {

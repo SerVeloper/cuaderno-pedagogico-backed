@@ -1,21 +1,11 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-} from 'typeorm';
+export class DepartmentEntity {
 
-@Entity('departments')
-export class Department {
-  @PrimaryGeneratedColumn('increment')
-  DepartmentID: number;
-
-  @Column({ unique: true, length: 50 })
-  DepartmentName: string;
-
-  @Column({ nullable: true, length: 255 })
-  Description: string;
-
-  @CreateDateColumn()
-  created_at: Date;
+  constructor(
+    public DepartmentID: number,
+    public Name: string,
+    public Description: string,
+    public IsActive: boolean,
+    public CreatedAt: Date,
+    public UpdatedAt: Date,
+  ) {}
 }
