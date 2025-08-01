@@ -15,12 +15,12 @@ export class DepartmentRepository implements DepartmentsRepositoryInterface {
 
   private toOrmEntity(domain: DepartmentEntity): Partial<DepartmentOrmEntity> {
     return {
-      DepartmentID: domain.departmentID,
-      Name: domain.name,
-      Description: domain.description,
-      IsActive: domain.isActive ?? true,
-      CreatedAt: domain.createdAt,
-      UpdatedAt: domain.updatedAt,
+      DepartmentID: domain.DepartmentID,
+      Name: domain.Name,
+      Description: domain.Description,
+      IsActive: domain.IsActive ?? true,
+      CreatedAt: domain.CreatedAt,
+      UpdatedAt: domain.UpdatedAt,
     };
   }
 
