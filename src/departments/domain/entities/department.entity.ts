@@ -1,10 +1,4 @@
 export class DepartmentEntity {
-  // DepartmentID: number;
-  // Name: string;
-  // Description: string;
-  // IsActive: boolean;
-  // CreatedAt: Date;
-  // UpdatedAt: Date;
 
   constructor(
     public departmentID: number,

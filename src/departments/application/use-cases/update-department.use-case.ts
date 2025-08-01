@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, InternalServerErrorException } from '@nestjs/common';
 import { DepartmentEntity } from '../../domain/entities/department.entity';
 import { UpdateDepartmentDto } from '../dtos/update-department.dto';
 import { DepartmentService } from '../services/department.service';
@@ -10,12 +10,32 @@ export class UpdateDepartmentUseCase {
   ) {}
 
   async execute(id: number, updateData: UpdateDepartmentDto): Promise<DepartmentEntity> {
-    const existingDepartment = await this.departmentService.findById(id);
+    const existing = await this.departmentService.findById(id);
+    if (!existing) throw new NotFoundException(`Department ${id} not found`);
 
-    if (!existingDepartment) {
-      throw new NotFoundException(`Department with ID ${id} not found`);
-    }
-    const departmentToUpdate = {...existingDepartment, ...updateData };
-    return this.departmentService.update(id, departmentToUpdate);
+    // 1. Crear objeto de actualización con validación explícita
+    const updatePayload: Partial<DepartmentEntity> = {};
+    
+    if (updateData.name !== undefined) updatePayload.name = updateData.name;
+    if (updateData.description !== undefined) updatePayload.description = updateData.description;
+    if (updateData.isActive !== undefined) updatePayload.isActive = updateData.isActive;
+    
+    updatePayload.updatedAt = new Date();
+
+    // 2. Construir entidad completa
+    const updatedEntity: DepartmentEntity = {
+      departmentID: existing.departmentID,
+      name: updatePayload.name ?? existing.name,
+      description: updatePayload.description ?? existing.description,
+      isActive: updatePayload.isActive ?? existing.isActive,
+      createdAt: existing.createdAt,
+      updatedAt: updatePayload.updatedAt
+    };
+
+    // 3. Ejecutar actualización
+    const updated = await this.departmentService.update(id, updatedEntity);
+    if (!updated) throw new InternalServerErrorException('Update failed');
+    
+    return updated;
   }
 }

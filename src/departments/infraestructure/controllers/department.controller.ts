@@ -36,6 +36,7 @@ export class DepartmentController {
 
   @Put(':id')
   async update(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateDepartmentDto) {
+    console.log('Updating department with ID:', id, 'with data:', dto);
     return this.updateDepartment.execute(id, dto);
   }
 
