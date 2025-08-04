@@ -12,6 +12,7 @@ import { UserRoleModule } from './user-roles/user-role.module';
 import { PassportModule } from '@nestjs/passport';
 import { CommonModule } from './common/common.module';
 import { JwtModule } from '@nestjs/jwt';
+import { ProvincesModule } from './provinces/province.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { JwtModule } from '@nestjs/jwt';
     PermissionModule,
     DepartmentModule,
     TermsAndConditionsModule,
+    ProvincesModule,
     UserDepartamentModule,
     EmailModule,
     PeriodModule,
