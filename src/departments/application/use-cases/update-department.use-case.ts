@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, InternalServerErrorException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { DepartmentEntity } from '../../domain/entities/department.entity';
 import { UpdateDepartmentDto } from '../dtos/update-department.dto';
 import { DepartmentService } from '../services/department.service';
@@ -14,5 +14,5 @@ export class UpdateDepartmentUseCase {
     }
     const updatedDepartment = { ...departmentResult, ...updateData };
     return this.departmentService.update(id, updatedDepartment);
-}
+  }
 }
