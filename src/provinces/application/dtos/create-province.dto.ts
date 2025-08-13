@@ -4,18 +4,18 @@ export class CreateProvinceDto {
   @IsNotEmpty()
   @IsString()
   @MaxLength(100)
-  name: string;
+  Name: string;
 
   @IsOptional()
   @IsString()
   @MaxLength(255)
-  description?: string;
+  Description?: string;
 
   @IsNotEmpty()
   @IsBoolean()
-  is_active: boolean;
+  IsActive: boolean;
 
   @IsNotEmpty()
   @IsNumber()
-  department_id: number;
+  DepartmentId: number;
 }

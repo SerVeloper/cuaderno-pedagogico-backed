@@ -4,18 +4,18 @@ export class UpdateProvinceDto {
   @IsOptional()
   @IsString()
   @MaxLength(100)
-  name?: string;
+  Name?: string;
 
   @IsOptional()
   @IsString()
   @MaxLength(255)
-  description?: string;
+  Description?: string;
 
   @IsOptional()
   @IsBoolean()
-  is_active?: boolean;
+  IsActive?: boolean;
 
   @IsOptional()
   @IsNumber()
-  department_id?: number;
+  DepartmentId?: number;
 }

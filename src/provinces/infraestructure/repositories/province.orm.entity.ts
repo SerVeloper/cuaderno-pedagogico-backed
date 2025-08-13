@@ -4,28 +4,28 @@ import { DepartmentOrmEntity } from '../../../departments/infraestructure/reposi
 @Entity('provinces')
 export class ProvinceOrmEntity {
   @PrimaryGeneratedColumn()
-  province_id: number;
+  ProvinceId: number;
 
   @Column({ type: 'varchar', length: 100, nullable: false })
-  name: string;
+  Name: string;
 
   @Column({ type: 'varchar', length: 255, nullable: true })
-  description: string;
+  Description: string;
 
   @Column({ type: 'boolean', default: true })
-  is_active: boolean;
+  IsActive: boolean;
 
   @Column({ type: 'int', nullable: false })
   @Index()
-  department_id: number;
+  DepartmentId: number;
 
-  @ManyToOne(() => DepartmentOrmEntity, (department) => department.DepartmentID, { nullable: false })
-  @JoinColumn({ name: 'department_id', referencedColumnName: 'DepartmentID' })
+  @ManyToOne(() => DepartmentOrmEntity, (department) => department.DepartmentId, { nullable: false })
+  @JoinColumn({ name: 'DepartmentId', referencedColumnName: 'DepartmentId' })
   department: DepartmentOrmEntity;
 
   @CreateDateColumn()
-  created_at: Date;
+  CreatedAt: Date;
 
   @UpdateDateColumn()
-  updated_at: Date;
+  UpdatedAt: Date;  
 }

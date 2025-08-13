@@ -1,6 +1,6 @@
 import { DepartmentEntity } from '../entities/department.entity';
 export interface DepartmentsRepositoryInterface {
-  create(department: Omit<DepartmentEntity, 'DepartmentID' | 'CreatedAt' | 'UpdatedAt'>): Promise<DepartmentEntity>;
+  create(department: Omit<DepartmentEntity, 'DepartmentId' | 'CreatedAt' | 'UpdatedAt'>): Promise<DepartmentEntity>;
   findAll(): Promise<DepartmentEntity[]>;
   findById(id: number): Promise<DepartmentEntity | null>;
   update(id: number, department: DepartmentEntity): Promise<DepartmentEntity>;

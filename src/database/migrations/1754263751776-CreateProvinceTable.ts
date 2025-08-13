@@ -7,41 +7,41 @@ export class CreateProvinceTable1754263751776 implements MigrationInterface {
         name: 'provinces',
         columns: [
           {
-            name: 'province_id',
+            name: 'ProvinceId',
             type: 'integer',
             isPrimary: true,
             isGenerated: true,
             generationStrategy: 'increment',
           },
           {
-            name: 'name',
+            name: 'Name',
             type: 'varchar',
             length: '100',
             isNullable: false,
           },
           {
-            name: 'description',
+            name: 'Description',
             type: 'varchar',
             length: '255',
             isNullable: true,
           },
           {
-            name: 'is_active',
+            name: 'IsActive',
             type: 'boolean',
             default: true,
           },
           {
-            name: 'department_id',
+            name: 'DepartmentId',
             type: 'integer',
             isNullable: false,
           },
           {
-            name: 'created_at',
+            name: 'CreatedAt',
             type: 'timestamp',
             default: 'CURRENT_TIMESTAMP',
           },
           {
-            name: 'updated_at',
+            name: 'UpdatedAt',
             type: 'timestamp',
             default: 'CURRENT_TIMESTAMP',
             onUpdate: 'CURRENT_TIMESTAMP',
@@ -54,9 +54,9 @@ export class CreateProvinceTable1754263751776 implements MigrationInterface {
     await queryRunner.createForeignKey(
       'provinces',
       new TableForeignKey({
-        columnNames: ['department_id'],
+        columnNames: ['DepartmentId'],
         referencedTableName: 'departments',
-        referencedColumnNames: ['DepartmentID'],
+        referencedColumnNames: ['DepartmentId'],
         onDelete: 'RESTRICT', 
         onUpdate: 'CASCADE',
       }),
@@ -64,7 +64,7 @@ export class CreateProvinceTable1754263751776 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropForeignKey('provinces', 'FK_provinces_department_id');
+    await queryRunner.dropForeignKey('provinces', 'FK_provinces_DepartmentId');
     await queryRunner.dropTable('provinces');
   }
 }

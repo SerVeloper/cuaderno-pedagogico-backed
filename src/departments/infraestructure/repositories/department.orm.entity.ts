@@ -3,7 +3,7 @@ import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateCol
 @Entity('departments')
 export class DepartmentOrmEntity {
   @PrimaryGeneratedColumn()
-  DepartmentID: number;
+  DepartmentId: number;
 
   @Column({ type: 'varchar', length: 100, nullable: false })
   Name: string;

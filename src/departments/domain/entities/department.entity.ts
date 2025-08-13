@@ -1,7 +1,7 @@
 export class DepartmentEntity {
 
   constructor(
-    public DepartmentID: number,
+    public DepartmentId: number,
     public Name: string,
     public Description: string,
     public IsActive: boolean,
