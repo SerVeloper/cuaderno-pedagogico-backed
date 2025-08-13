@@ -7,7 +7,7 @@ export class CreateDepartmentTable1751838391958 implements MigrationInterface {
         name: 'departments',
         columns: [
           {
-            name: 'DepartmentID',
+            name: 'DepartmentId',
             type: 'int',
             isPrimary: true,
             isGenerated: true,

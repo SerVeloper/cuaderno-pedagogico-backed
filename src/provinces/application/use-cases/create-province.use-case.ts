@@ -18,22 +18,22 @@ export class CreateProvinceUseCase {
   @ApiResponse({ status: 201, description: 'Province created', type: ProvinceEntity })
   @ApiResponse({ status: 400, description: 'Invalid department ID or other error' })
   async execute(createProvinceDto: CreateProvinceDto): Promise<ProvinceEntity> {
-    const department = await this.departmentRepository.findById(createProvinceDto.department_id);
+    const department = await this.departmentRepository.findById(createProvinceDto.DepartmentId);
     if (!department) {
-      throw new BadRequestException(`Department with ID ${createProvinceDto.department_id} does not exist`);
+      throw new BadRequestException(`Department with ID ${createProvinceDto.DepartmentId} does not exist`);
     }
     const newProvince = {
-      name: createProvinceDto.name,
-      description: createProvinceDto.description ?? '',
-      is_active: createProvinceDto.is_active,
-      department_id: createProvinceDto.department_id,
+      Name: createProvinceDto.Name,
+      Description: createProvinceDto.Description ?? '',
+      IsActive: createProvinceDto.IsActive,
+      DepartmentId: createProvinceDto.DepartmentId,
     };
 
     try {
       return await this.provinceRepository.create(newProvince);
     } catch (error) {
       if (error instanceof Error && (error.message.includes('ER_NO_REFERENCED_ROW') || error.message.includes('23503'))) {
-        throw new BadRequestException(`Department with ID ${createProvinceDto.department_id} does not exist`);
+        throw new BadRequestException(`Department with ID ${createProvinceDto.DepartmentId} does not exist`);
       }
       throw new BadRequestException(`Failed to create province: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }

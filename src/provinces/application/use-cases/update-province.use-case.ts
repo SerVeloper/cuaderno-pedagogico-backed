@@ -24,25 +24,25 @@ export class UpdateProvinceUseCase {
       throw new NotFoundException('Province with ID ${id} not found.');
     }
 
-    if (updateProvinceDto.department_id !== undefined) {
-      const department = await this.departmentsRepository.findById(updateProvinceDto.department_id);
+    if (updateProvinceDto.DepartmentId !== undefined) {
+      const department = await this.departmentsRepository.findById(updateProvinceDto.DepartmentId);
       if (!department) {
-        throw new BadRequestException('Department with ID ${updateProvinceDto.department_id} does not exist.');
+        throw new BadRequestException('Department with ID ${updateProvinceDto.DepartmentId} does not exist.');
       }
     }
 
     const province = {
-      name: updateProvinceDto.name ?? existingProvince.name,
-      description: updateProvinceDto.description ?? existingProvince.description,
-      is_active: updateProvinceDto.is_active ?? existingProvince.is_active,
-      department_id: updateProvinceDto.department_id ?? existingProvince.department_id,
+      Name: updateProvinceDto.Name ?? existingProvince.Name,
+      Description: updateProvinceDto.Description ?? existingProvince.Description,
+      IsActive: updateProvinceDto.IsActive ?? existingProvince.IsActive,
+      DepartmentId: updateProvinceDto.DepartmentId ?? existingProvince.DepartmentId,
     };
 
     try {
       return await this.provincesRepository.update(id, province);
     } catch (error) {
       if (error instanceof Error && (error.message.includes('ER_NO_REFERENCED_ROW') || error.message.includes('23503'))) {
-        throw new BadRequestException(`Department with ID ${updateProvinceDto.department_id} does not exist`);
+        throw new BadRequestException(`Department with ID ${updateProvinceDto.DepartmentId} does not exist`);
       }
       throw new BadRequestException(`Failed to update province: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }

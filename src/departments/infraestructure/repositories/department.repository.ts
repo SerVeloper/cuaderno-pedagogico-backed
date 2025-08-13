@@ -15,7 +15,7 @@ export class DepartmentRepository implements DepartmentsRepositoryInterface {
 
   private toOrmEntity(domain: DepartmentEntity): Partial<DepartmentOrmEntity> {
     return {
-      DepartmentID: domain.DepartmentID,
+      DepartmentId: domain.DepartmentId,
       Name: domain.Name,
       Description: domain.Description,
       IsActive: domain.IsActive ?? true,
@@ -26,7 +26,7 @@ export class DepartmentRepository implements DepartmentsRepositoryInterface {
 
   private toDomainEntity(entity: DepartmentOrmEntity): DepartmentEntity {
     return new DepartmentEntity(
-      entity.DepartmentID,
+      entity.DepartmentId,
       entity.Name,
       entity.Description,
       entity.IsActive,
@@ -47,13 +47,13 @@ export class DepartmentRepository implements DepartmentsRepositoryInterface {
   }
 
   async findById(id: number): Promise<DepartmentEntity | null> {
-    const entity = await this.repository.findOne({ where: { DepartmentID: id, IsActive: true } });
+    const entity = await this.repository.findOne({ where: { DepartmentId: id, IsActive: true } });
     return entity ? this.toDomainEntity(entity) : null;
   }
 
   async update(id: number, departmentEntity: DepartmentEntity): Promise<DepartmentEntity> {
     await this.repository.update(id, this.toOrmEntity(departmentEntity));
-    const updateEntity = await this.repository.findOne({ where: { DepartmentID: id } });
+    const updateEntity = await this.repository.findOne({ where: { DepartmentId: id } });
     if (!updateEntity) {
       throw new NotFoundException(`Department with ID ${id} not found `);
     }
@@ -61,7 +61,7 @@ export class DepartmentRepository implements DepartmentsRepositoryInterface {
   }
 
   async delete(id: number): Promise<void> {
-    const department = await this.repository.findOne({ where: { DepartmentID: id, IsActive: true } });
+    const department = await this.repository.findOne({ where: { DepartmentId: id, IsActive: true } });
     if (!department) throw new NotFoundException(`Department with ID ${id} not found`);
     department.IsActive = false;
     await this.repository.save(department);
