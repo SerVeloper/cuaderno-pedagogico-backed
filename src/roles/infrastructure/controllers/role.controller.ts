@@ -7,44 +7,66 @@ import {
   Body,
   Param,
   UseGuards,
+  Inject,
 } from '@nestjs/common';
-import { RoleService } from '../../application/services/role.service';
-import { CreateRoleDto } from '../../application/dtos/role.dto';
+import { CreateRoleDto } from '../../application/dtos/create-role.dto';
+import { UpdateRoleDto } from '../../application/dtos/update-role.dto';
+import { CreateRoleUseCase } from '../../application/use-cases/create-role.use-case';
+import { UpdateRoleUseCase } from '../../application/use-cases/update-role.use-case';
+import { FindAllRoleUseCase } from '../../application/use-cases/find-all-role.use-case';
+import { FindByIdRoleUseCase } from '../../application/use-cases/find-by-id-role.use-case';
+import { DeleteRoleUseCase } from '../../application/use-cases/delete-role.use-case';
+import { Role } from '../../domain/entities/role.entity';
+
 import { JwtAuthGuard } from '../../../common/guards/jwt-auth.guard';
 import { Roles } from '../../../common/decorators/roles.decorator';
 
+
 @Controller('roles')
 // @UseGuards(JwtAuthGuard)
-export class RoleController {
-  constructor(private readonly roleService: RoleService) {}
+export class RoleController { 
+  constructor(
+    @Inject('CreateRoleUseCase')
+    private readonly createRoleUseCase: CreateRoleUseCase,
+    @Inject('FindAllRoleUseCase')
+    private readonly findAllRoleUseCase: FindAllRoleUseCase,
+    @Inject('FindByIdRoleUseCase')
+    private readonly findByIdRoleUseCase: FindByIdRoleUseCase,
+    @Inject('UpdateRoleUseCase')
+    private readonly updateRoleUseCase: UpdateRoleUseCase,
+    @Inject('DeleteRoleUseCase')
+    private readonly deleteRoleUseCase: DeleteRoleUseCase,
+
+  ) {}
 
   @Post()
-  // @Roles("ADMIN")
-  create(@Body() createRoleDto: CreateRoleDto) {
-    return this.roleService.create(createRoleDto);
+  // @Roles('admin')
+  async create(@Body() createRoleDto: CreateRoleDto): Promise<Role> {
+    return this.createRoleUseCase.execute({ createRoleDto });
   }
 
   @Get()
-  // @Roles("ADMIN")
-  findAll() {
-    return this.roleService.findAll();
+  async findAll(): Promise<Role[]> {
+    return this.findAllRoleUseCase.execute();
   }
 
   @Get(':id')
-  @Roles('ADMIN')
-  findOne(@Param('id') id: string) {
-    return this.roleService.findOne(+id);
+  async findById(@Param('id') id: number): Promise<Role> {
+    return this.findByIdRoleUseCase.execute(id);
   }
 
   @Put(':id')
-  @Roles('ADMIN')
-  update(@Param('id') id: string, @Body() updateRoleDto: CreateRoleDto) {
-    return this.roleService.update(+id, updateRoleDto);
+  // @Roles('admin')
+  async update(
+    @Param('id') id: number,
+    @Body() updateRoleDto: UpdateRoleDto,
+  ): Promise<Role> {
+    return this.updateRoleUseCase.execute({ id, updateRoleDto });
   }
 
   @Delete(':id')
-  @Roles('ADMIN')
-  delete(@Param('id') id: string) {
-    return this.roleService.delete(+id);
+  // @Roles('admin')
+  async delete(@Param('id') id: number): Promise<boolean> {
+    return this.deleteRoleUseCase.execute(id);
   }
 }

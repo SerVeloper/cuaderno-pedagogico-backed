@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 
-export class CreateRoleDto {
+export class UpdateRoleDto {
   @IsNotEmpty()
   @IsString()
   RoleName: string;
@@ -8,6 +8,4 @@ export class CreateRoleDto {
   @IsString()
   Description?: string;
 
-  @IsString({ each: true })
-  permissionIds?: number[];
 }

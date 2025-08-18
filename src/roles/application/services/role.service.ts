@@ -1,32 +1,45 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { RoleRepositoryInterface } from '../../domain/interfaces/role.repository.interface';
-import { CreateRoleDto } from '../dtos/role.dto';
-import { Role } from '../../domain/entities/role.entity';
+import { Role} from '../../domain/entities/role.entity';
+import { CreateRoleUseCase } from '../use-cases/create-role.use-case';
+import { FindAllRoleUseCase } from '../use-cases/find-all-role.use-case';
+import { UpdateRoleUseCase } from '../use-cases/update-role.use-case';
+import { FindByIdRoleUseCase } from '../use-cases/find-by-id-role.use-case';
+import { DeleteRoleUseCase } from '../use-cases/delete-role.use-case';  
+import { CreateRoleDto } from '../dtos/create-role.dto';
+import { UpdateRoleDto } from '../dtos/update-role.dto';
 
 @Injectable()
 export class RoleService {
   constructor(
-    @Inject('RoleRepositoryInterface')
-    private readonly roleRepository: RoleRepositoryInterface,
+    @Inject('CreateRoleUseCase')
+    private readonly createRoleUseCase: CreateRoleUseCase,
+    @Inject('FindAllRoleUseCase')
+    private readonly findAllRoleUseCase: FindAllRoleUseCase,
+    @Inject('UpdateRoleUseCase')
+    private readonly updateRoleUseCase: UpdateRoleUseCase,
+    @Inject('FindByIdRoleUseCase')
+    private readonly findByIdRoleUseCase: FindByIdRoleUseCase,
+    @Inject('DeleteRoleUseCase')
+    private readonly deleteRoleUseCase: DeleteRoleUseCase
   ) {}
 
-  async create(createRoleDto: CreateRoleDto): Promise<Role> {
-    return this.roleRepository.create(createRoleDto);
+  async createRole(createRoleDto: CreateRoleDto): Promise<Role> {
+    return this.createRoleUseCase.execute({ createRoleDto });
   }
 
-  async findAll(): Promise<Role[]> {
-    return this.roleRepository.findAll();
+  async findAllRoles(): Promise<Role[]> {
+    return this.findAllRoleUseCase.execute();
   }
 
-  async findOne(id: number): Promise<Role | null> {
-    return this.roleRepository.findOne(id);
+  async findRoleById(id: number): Promise<Role> {
+    return this.findByIdRoleUseCase.execute(id);
   }
 
-  async update(id: number, updateRoleDto: CreateRoleDto): Promise<Role> {
-    return this.roleRepository.update(id, updateRoleDto);
+  async updateRole(id: number, updateRoleDto: UpdateRoleDto): Promise<Role> {
+    return this.updateRoleUseCase.execute({ id, updateRoleDto });
   }
 
-  async delete(id: number): Promise<void> {
-    return this.roleRepository.delete(id);
+  async deleteRole(id: number): Promise<boolean> {
+    return this.deleteRoleUseCase.execute(id);
   }
 }
