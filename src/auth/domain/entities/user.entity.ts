@@ -29,9 +29,8 @@ export class User {
   @Column({ length: 15, nullable: true })
   Phone: string;
 
-  @ManyToOne(() => Role, { eager: true })
-  @JoinColumn({ name: 'RoleID' })
-  role: Role;
+  @Column()
+  RoleID: number;
 
   @CreateDateColumn()
   CreatedAt: Date;

@@ -25,7 +25,22 @@ export class CreateRolesTable1751754354739 implements MigrationInterface {
             isNullable: true,
             length: '255',
           },
-          { name: 'created_at', type: 'timestamp', default: 'now()' },
+          {
+            name: 'CreatedAt',
+            type: 'timestamp',
+            default: 'now()',
+          },
+          {
+            name: 'UpdatedAt',
+            type: 'timestamp',
+            default: 'now()',
+            onUpdate: 'now()',
+          },
+          {
+            name: 'DeletedAt',
+            type: 'timestamp',
+            isNullable: true,
+          },
         ],
       }),
     );
