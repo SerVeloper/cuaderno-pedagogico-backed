@@ -1,7 +1,6 @@
 import { Injectable, Inject, BadRequestException } from '@nestjs/common';
 import { CreateProvinceDto } from '../dtos/create-province.dto';
 import { ProvinceEntity } from '../../domain/entities/province.entity';
-import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { ProvincesRepositoryInterface } from '../../domain/interfaces/province.repository.interface';
 import { DepartmentsRepositoryInterface } from '../../../departments/domain/interfaces/department.repository.interface';
 
@@ -14,9 +13,6 @@ export class CreateProvinceUseCase {
     private readonly departmentRepository: DepartmentsRepositoryInterface,
   ) {}
 
-  @ApiOperation({ summary: 'Create a new province' })
-  @ApiResponse({ status: 201, description: 'Province created', type: ProvinceEntity })
-  @ApiResponse({ status: 400, description: 'Invalid department ID or other error' })
   async execute(createProvinceDto: CreateProvinceDto): Promise<ProvinceEntity> {
     const department = await this.departmentRepository.findById(createProvinceDto.DepartmentId);
     if (!department) {
