@@ -15,6 +15,7 @@ import { PassportModule } from '@nestjs/passport';
 import { CommonModule } from './common/common.module';
 import { JwtModule } from '@nestjs/jwt';
 import { ProvincesModule } from './provinces/province.module';
+import { LevelModule } from './levels/level.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { ProvincesModule } from './provinces/province.module';
     DepartmentModule,
     TermsAndConditionsModule,
     ProvincesModule,
+    LevelModule,
     UserDepartamentModule,
     EmailModule,
     PeriodModule,

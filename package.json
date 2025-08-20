@@ -14,6 +14,7 @@
   "schema:drop": "npm run typeorm schema:drop -- -d dist/database/data-source.js",
   "seed": "typeorm-extension seed:run --dataSource dist/database/data-source.js --name",
   "seed:departments": "npm run seed -- DepartmentSeeder",
+  "seed:levels": "npm run seed -- LevelSeeder",
   "start:dev": "nest start --watch",
   "start:debug": "nest start --debug --watch",
   "start:prod": "node dist/main",
