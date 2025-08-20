@@ -3,7 +3,6 @@ import { ProvincesRepositoryInterface } from '../../domain/interfaces/province.r
 import { DepartmentsRepositoryInterface } from '../../../departments/domain/interfaces/department.repository.interface';
 import { ProvinceEntity } from '../../domain/entities/province.entity';
 import { UpdateProvinceDto } from '../dtos/update-province.dto';
-import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 
 @Injectable()
 export class UpdateProvinceUseCase {
@@ -14,10 +13,6 @@ export class UpdateProvinceUseCase {
     private readonly departmentsRepository: DepartmentsRepositoryInterface,
   ) {}
 
-  @ApiOperation({ summary: 'Update a province' })
-  @ApiResponse({ status: 200, description: 'The province has been successfully updated.' })
-  @ApiResponse({ status: 404, description: 'Province not found.' })
-  @ApiResponse({ status: 400, description: 'Invalid data provided.' })
   async execute(id: number, updateProvinceDto: UpdateProvinceDto): Promise<ProvinceEntity> {
     const existingProvince = await this.provincesRepository.findById(id);
     if (!existingProvince) {

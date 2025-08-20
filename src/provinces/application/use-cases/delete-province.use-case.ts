@@ -1,6 +1,5 @@
 import { Injectable, Inject, NotFoundException, BadRequestException } from '@nestjs/common';
 import { ProvincesRepositoryInterface } from '../../domain/interfaces/province.repository.interface';
-import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 
 @Injectable()
 export class DeleteProvinceUseCase {
@@ -9,10 +8,6 @@ export class DeleteProvinceUseCase {
     private readonly provincesRepositoryInterface: ProvincesRepositoryInterface,
   ) {}
 
-  @ApiOperation({ summary: 'Delete a province by ID' })
-  @ApiResponse({ status: 200, description: 'Province deleted successfully' })
-  @ApiResponse({ status: 404, description: 'Province not found' })
-  @ApiResponse({ status: 400, description: 'Bad request' })
   async execute(id: number): Promise<void> {
     const province = await this.provincesRepositoryInterface.findById(id);
     if (!province) {
