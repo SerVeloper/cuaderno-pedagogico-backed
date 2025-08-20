@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner, Table } from 'typeorm';
+import { MigrationInterface, QueryRunner, Table, TableForeignKey } from 'typeorm';
 
 export class CreateSubjectTable1755543413225 implements MigrationInterface {
 
@@ -44,11 +44,17 @@ export class CreateSubjectTable1755543413225 implements MigrationInterface {
             ]
         }));
 
-        // índice para LevelId 
-        // await queryRunner.createIndex('subject', new Index('IDX_SUBJECT_LEVEL', ['LevelId']));
+        await queryRunner.createForeignKey('subject', new TableForeignKey({
+            columnNames: ['LevelId'],
+            referencedTableName: 'levels',
+            referencedColumnNames: ['LevelId'],
+            onDelete: 'RESTRICT',
+            onUpdate: 'CASCADE',
+        }));
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
+        await queryRunner.dropForeignKey('subject', 'FK_subject_LevelId');
         await queryRunner.dropTable('subject');
     }
 }
