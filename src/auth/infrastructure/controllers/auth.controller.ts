@@ -45,7 +45,7 @@ export class AuthController {
 
   @Post('assign-role')
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('admin')
+  @Roles('admin','user')
   async assignRoleToUser(@Body() dto: AssignRoleDto) {
     try {
       await this.assignRole.execute(dto);
