@@ -8,15 +8,18 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
-      secretOrKey: 'your-secret-key',
+      secretOrKey: process.env.JWT_SECRET || 'dev-secret',
     });
   }
 
   async validate(payload: any) {
+    if (!payload.roles) {
+      console.warn('No roles found in token payload:', payload);
+    }
     return {
       userId: payload.sub,
       email: payload.email,
-      role: payload.role,
+      roles: Array.isArray(payload.roles) ? payload.roles : [], 
     };
   }
 }
