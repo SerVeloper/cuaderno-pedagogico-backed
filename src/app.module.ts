@@ -1,21 +1,21 @@
 import { Module } from '@nestjs/common';
 import { AuthModule } from './auth/auth.module';
 import { DatabaseModule } from './database/database.module';
-import { RoleModule } from './roles/role.module';
-import { PermissionModule } from './permissions/permission.module';
-import { DepartmentModule } from './departments/department.module';
-import { TermsAndConditionsModule } from './terms_and_conditions/terms_and_conditions.module';
-import {UserDepartamentModule} from './userDepartament/user-departament.module'
-import {EmailModule} from './emails/emails.module'
-import { PeriodModule } from './period/period.module';
-import { UserRoleModule } from './user-roles/user-role.module';
-import { AudiLogModule } from './audi-logs/audi-log.module';
-import { DimensionModule } from './dimension/dimension.module';
+import { RoleModule } from './modules/roles/role.module';
+import { PermissionModule } from './modules/permissions/permission.module';
+import { DepartmentModule } from './modules/departments/department.module';
+import { TermsAndConditionsModule } from './modules/terms_and_conditions/terms_and_conditions.module';
+import {UserDepartamentModule} from './modules/userDepartament/user-departament.module'
+import {EmailModule} from './modules/emails/emails.module'
+import { PeriodModule } from './modules/period/period.module';
+import { UserRoleModule } from './modules/user-roles/user-role.module';
+import { AudiLogModule } from './modules/audi-logs/audi-log.module';
+import { DimensionModule } from './modules/dimension/dimension.module';
 import { PassportModule } from '@nestjs/passport';
 import { CommonModule } from './common/common.module';
 import { JwtModule } from '@nestjs/jwt';
-import { ProvincesModule } from './provinces/province.module';
-import { SubjectModule } from './subject/subject.module';
+import { ProvincesModule } from './modules/provinces/province.module';
+import { SubjectModule } from './modules/subject/subject.module';
 
 @Module({
   imports: [

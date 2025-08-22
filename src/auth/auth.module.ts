@@ -5,7 +5,7 @@ import { AuthController } from './infrastructure/controllers/auth.controller';
 import { AuthService } from './application/services/auth.service';
 import { AuthRepository } from './infrastructure/repositories/auth.repository';
 import { User } from './domain/entities/user.entity';
-import { Role } from '../roles/domain/entities/role.entity';
+import { Role } from '../modules/roles/domain/entities/role.entity';
 
 @Module({
   imports: [

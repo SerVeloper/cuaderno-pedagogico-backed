@@ -7,7 +7,7 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import { Role } from '../../../roles/domain/entities/role.entity';
+import { Role } from '../../../modules/roles/domain/entities/role.entity';
 
 @Entity('users')
 export class User {

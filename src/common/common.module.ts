@@ -1,5 +1,5 @@
-import { Module } from "@nestjs/common";
-import { JwtStrategy } from "./strategies/jwt.strategy";
+import { Module } from '@nestjs/common';
+import { JwtStrategy } from './strategies/jwt.strategy';
 
 @Module({
   providers: [JwtStrategy],
