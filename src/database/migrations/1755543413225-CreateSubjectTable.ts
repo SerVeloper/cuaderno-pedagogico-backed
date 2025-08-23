@@ -44,13 +44,13 @@ export class CreateSubjectTable1755543413225 implements MigrationInterface {
             ]
         }));
 
-        await queryRunner.createForeignKey('subject', new TableForeignKey({
-            columnNames: ['LevelId'],
-            referencedTableName: 'levels',
-            referencedColumnNames: ['LevelId'],
-            onDelete: 'RESTRICT',
-            onUpdate: 'CASCADE',
-        }));
+        // await queryRunner.createForeignKey('subject', new TableForeignKey({
+        //     columnNames: ['LevelId'],
+        //     referencedTableName: 'levels',
+        //     referencedColumnNames: ['LevelId'],
+        //     onDelete: 'RESTRICT',
+        //     onUpdate: 'CASCADE',
+        // }));
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {

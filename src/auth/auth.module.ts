@@ -1,22 +1,62 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { JwtModule } from '@nestjs/jwt';
+import { JwtModule, JwtService } from '@nestjs/jwt';
+
+import { UserOrm } from './infrastructure/repositories/user.orm.entity';
+import { UserRoleEntity } from '../user-roles/infrastructure/repositories/user-role.orm.entity';
+import { RoleOrmEntity } from '../roles/infrastructure/repositories/role.orm.entity';
+
+import { UserRepository } from './infrastructure/repositories/user.repository';
+
+import { BcryptHasher } from './infrastructure/services/bcrypt.hasher';
+import { JwtTokenService } from './infrastructure/services/jwt.token-service';
+
+import { RegisterUserUseCase } from './application/use-cases/register.use-case';
+import { LoginUseCase } from './application/use-cases/login.use-case';
+import { AssignRoleUseCase } from './application/use-cases/assign-role.use-case';
+
 import { AuthController } from './infrastructure/controllers/auth.controller';
-import { AuthService } from './application/services/auth.service';
-import { AuthRepository } from './infrastructure/repositories/auth.repository';
-import { User } from './domain/entities/user.entity';
-import { Role } from '../roles/domain/entities/role.entity';
+
+const USER_REPO = Symbol('USER_REPO');
+const HASHER = Symbol('HASHER');
+const TOKEN_SERVICE = Symbol('TOKEN_SERVICE');
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, Role]),
+    TypeOrmModule.forFeature([UserOrm, UserRoleEntity, RoleOrmEntity]),
     JwtModule.register({
-      secret: 'your-secret-key',
-      signOptions: { expiresIn: '1h' },
+      global: false,
+      secret: process.env.JWT_SECRET || 'dev-secret',
+      signOptions: { expiresIn: '1d' },
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, { provide: 'AuthRepositoryInterface', useClass: AuthRepository }],
-  exports: [AuthService],
+  providers: [
+    { provide: USER_REPO, useClass: UserRepository },
+    { provide: HASHER, useClass: BcryptHasher },
+    {
+      provide: TOKEN_SERVICE,
+      useFactory: (jwtService: JwtService) => new JwtTokenService(jwtService),
+      inject: [JwtService], // Asegura que JwtService se inyecta
+    },
+    {
+      provide: RegisterUserUseCase,
+      useFactory: (repo: UserRepository, hasher: BcryptHasher) =>
+        new RegisterUserUseCase(repo, hasher),
+      inject: [USER_REPO, HASHER],
+    },
+    {
+      provide: LoginUseCase,
+      useFactory: (repo: UserRepository, hasher: BcryptHasher, token: JwtTokenService) =>
+        new LoginUseCase(repo, hasher, token),
+      inject: [USER_REPO, HASHER, TOKEN_SERVICE],
+    },
+    {
+      provide: AssignRoleUseCase,
+      useFactory: (repo: UserRepository) => new AssignRoleUseCase(repo),
+      inject: [USER_REPO],
+    },
+  ],
+  exports: [],
 })
 export class AuthModule {}

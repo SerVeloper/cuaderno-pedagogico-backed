@@ -1,5 +1,8 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, Index, ManyToOne, JoinColumn } from 'typeorm';
+
+import { Entity, Column,OneToMany, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, Index, ManyToOne, JoinColumn } from 'typeorm';
 import { Role } from '../../domain/entities/role.entity';
+import { UserRoleEntity } from '../../../user-roles/infrastructure/repositories/user-role.orm.entity';
+
 
 @Entity('roles')
 export class RoleOrmEntity implements Role {
@@ -20,4 +23,8 @@ export class RoleOrmEntity implements Role {
 
   @UpdateDateColumn({ nullable: true })
   DeletedAt: Date | null;
+
+  @OneToMany(() => UserRoleEntity, ur => ur.role)
+  userRoles!: UserRoleEntity[];
+
 }
