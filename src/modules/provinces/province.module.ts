@@ -16,37 +16,17 @@ import { DeleteProvinceUseCase } from './application/use-cases/delete-province.u
   controllers: [ProvinceController],
   providers: [
     ProvinceService,
-    {
-      provide: 'CreateProvinceUseCase',
-      useClass: CreateProvinceUseCase,
-    },
-    {
-      provide: 'FindAllProvincesUseCase',
-      useClass: FindAllProvincesUseCase,
-    },
-    {
-      provide: 'FindProvinceByIdUseCase',
-      useClass: FindProvinceByIdUseCase,
-    },
-    {
-      provide: 'UpdateProvinceUseCase',
-      useClass: UpdateProvinceUseCase,
-    },
-    {
-      provide: 'DeleteProvinceUseCase',
-      useClass: DeleteProvinceUseCase,
-    },
-    {
-      provide: 'ProvincesRepositoryInterface',
-      useClass: ProvinceRepository,
-    },
-    {
-      provide: 'DepartmentsRepositoryInterface',
-      useClass: DepartmentRepository,
-    },
+    { provide: 'CreateProvinceUseCase', useClass: CreateProvinceUseCase },
+    { provide: 'FindAllProvincesUseCase', useClass: FindAllProvincesUseCase },
+    { provide: 'FindProvinceByIdUseCase', useClass: FindProvinceByIdUseCase },
+    { provide: 'UpdateProvinceUseCase', useClass: UpdateProvinceUseCase },
+    { provide: 'DeleteProvinceUseCase', useClass: DeleteProvinceUseCase },
+    { provide: 'ProvincesRepositoryInterface', useClass: ProvinceRepository },
+    { provide: 'DepartmentsRepositoryInterface', useClass: DepartmentRepository },
   ],
   imports: [
     TypeOrmModule.forFeature([ProvinceOrmEntity, DepartmentOrmEntity]),
   ],
+  exports: [ProvinceService],
 })
 export class ProvincesModule {}
