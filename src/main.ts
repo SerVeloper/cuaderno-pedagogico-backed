@@ -33,8 +33,8 @@ async function bootstrap() {
 
   // Validación global
   app.useGlobalPipes(new ValidationPipe({
-    whitelist: true,
-    forbidNonWhitelisted: true,
+    // whitelist: true,
+    // forbidNonWhitelisted: true,
     transform: true,
     transformOptions: {
       enableImplicitConversion: true,
@@ -69,7 +69,7 @@ async function bootstrap() {
       'dev@NextSoft.com'
     )
     .setLicense('MIT', 'https://opensource.org/licenses/MIT')
-    
+
     //  TAGS ORGANIZADOS
     .addTag('🔐 auth', 'Autenticación y autorización de usuarios')
     .addTag('👥 users', 'Gestión de usuarios del sistema')
@@ -83,7 +83,7 @@ async function bootstrap() {
     .addTag('📧 emails', 'Sistema de comunicaciones')
     .addTag('📝 audit-logs', 'Registro de auditoría del sistema')
     .addTag('📋 terms-conditions', 'Términos y condiciones legales')
-    
+
     // SEGURIDAD
     .addBearerAuth(
       {
@@ -96,7 +96,7 @@ async function bootstrap() {
       },
       'JWT-auth',
     )
-    
+
     // SERVIDORES
     .addServer(`http://localhost:${APP_PORT}`, 'Servidor de Desarrollo')
     .addServer('https://api-production.NextSoft.com', 'Servidor de Producción')

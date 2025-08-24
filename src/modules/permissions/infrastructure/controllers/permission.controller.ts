@@ -14,7 +14,7 @@ import { JwtAuthGuard } from '../../../../common/guards/jwt-auth.guard';
 import { Roles } from '../../../../common/decorators/roles.decorator';
 
 @Controller('permissions')
-// @UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard)
 export class PermissionController {
   constructor(private readonly permissionService: PermissionService) {}
 
@@ -25,7 +25,7 @@ export class PermissionController {
   }
 
   @Get()
-  @Roles('ADMIN', 'USER')
+  @Roles('admin', 'user')
   findAll() {
     return this.permissionService.findAll();
   }
