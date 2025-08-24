@@ -13,13 +13,12 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: any) {
-    if (!payload.roles) {
-      console.warn('No roles found in token payload:', payload);
-    }
-    return {
+  
+    const user = {
       userId: payload.sub,
       email: payload.email,
-      roles: Array.isArray(payload.roles) ? payload.roles : [], 
+      roles: Array.isArray(payload.roles) ? payload.roles : [],
     };
+    return user;
   }
 }

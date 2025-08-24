@@ -1,7 +1,7 @@
 import {
   Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany,
 } from 'typeorm';
-import { UserRoleEntity } from '../../../user-roles/infrastructure/repositories/user-role.orm.entity';
+import { UserRoleEntity } from '../../../modules/user-roles/infrastructure/repositories/user-role.orm.entity';
 
 @Entity({ name: 'users' })
 export class UserOrm {

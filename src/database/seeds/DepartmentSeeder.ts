@@ -1,7 +1,7 @@
 import { DataSource } from 'typeorm';
 import { Seeder } from 'typeorm-extension';
 
-export default class DepartmentSeeder implements Seeder {
+export  class DepartmentSeeder implements Seeder {
   public async run(dataSource: DataSource): Promise<void> {
     const departments = [
       {

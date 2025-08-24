@@ -3,8 +3,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 
 import { UserOrm } from './infrastructure/repositories/user.orm.entity';
-import { UserRoleEntity } from '../user-roles/infrastructure/repositories/user-role.orm.entity';
-import { RoleOrmEntity } from '../roles/infrastructure/repositories/role.orm.entity';
+import { UserRoleEntity } from '../modules/user-roles/infrastructure/repositories/user-role.orm.entity';
+import { RoleOrmEntity } from '../modules/roles/infrastructure/repositories/role.orm.entity';
 
 import { UserRepository } from './infrastructure/repositories/user.repository';
 

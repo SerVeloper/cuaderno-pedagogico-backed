@@ -3,9 +3,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UserOrm } from './user.orm.entity';
 import { UserRepositoryInterface } from '../../domain/interfaces/user.repository.interface';
 import { User } from '../../domain/entities/user.entity';
-import { Role } from '../../../roles/domain/entities/role.entity';
-import { RoleOrmEntity } from '../../../roles/infrastructure/repositories/role.orm.entity';
-import { UserRoleEntity } from '../../../user-roles/infrastructure/repositories/user-role.orm.entity';
+import { Role } from '../../../modules/roles/domain/entities/role.entity';
+import { RoleOrmEntity } from '../../../modules/roles/infrastructure/repositories/role.orm.entity';
+import { UserRoleEntity } from '../../../modules/user-roles/infrastructure/repositories/user-role.orm.entity';
 
 function toDomain(e: UserOrm): User {
   return new User(

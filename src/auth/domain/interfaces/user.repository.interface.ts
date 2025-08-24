@@ -1,5 +1,5 @@
 import { User } from '../entities/user.entity';
-import { Role } from '../../../roles/domain/entities/role.entity';
+import { Role } from '../../../modules/roles/domain/entities/role.entity';
 
 export interface UserRepositoryInterface {
   findById(id: number): Promise<User | null>;
