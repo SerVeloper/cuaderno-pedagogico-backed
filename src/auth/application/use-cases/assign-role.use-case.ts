@@ -14,7 +14,6 @@ export class AssignRoleUseCase {
   ) {}
 
   async execute(dto: AssignRoleDto): Promise<void> {
-    // Valida si usuario y rol existen (opcional, pero recomendado)
     const user = await this.users.findById(dto.userId);
     if (!user) throw new Error('User not found');
 
