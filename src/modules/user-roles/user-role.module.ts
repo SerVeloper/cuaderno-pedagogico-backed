@@ -9,9 +9,10 @@ import { FindAllUserRoleUseCase } from './application/use-cases/find-all-user-ro
 import { FindOneUserRoleUseCase } from './application/use-cases/find-one-user-role.use-case';
 import { UpdateUserRoleUseCase } from './application/use-cases/update-user-role.use-case';
 import { DeleteUserRoleUseCase } from './application/use-cases/delete-user-role.use-case';
+import { UserOrm } from '../../auth/infrastructure/repositories/user.orm.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UserRoleEntity])],
+  imports: [TypeOrmModule.forFeature([UserRoleEntity, UserOrm])],
   controllers: [UserRoleController],
   providers: [
     UserRoleService,
