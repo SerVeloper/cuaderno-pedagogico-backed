@@ -1,421 +1,122 @@
-<div align="center">
-  <h1>🎓 Cuaderno Pedagógico - Backend API</h1>
-  <p>Sistema integral de gestión pedagógica para instituciones educativas</p>
-  
-  ![NestJS](https://img.shields.io/badge/NestJS-10.0-red?logo=nestjs)
-  ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?logo=typescript)
-  ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-blue?logo=postgresql)
-  ![Swagger](https://img.shields.io/badge/Swagger-UI-green?logo=swagger)
-  ![JWT](https://img.shields.io/badge/JWT-Auth-orange?logo=jsonwebtokens)
-</div>
+<p align="center">
+  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
+</p>
 
----
+[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
+[circleci-url]: https://circleci.com/gh/nestjs/nest
 
-## 📋 Tabla de Contenidos
+  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
+    <p align="center">
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
+<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
+<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
+<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
+<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
+  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
+    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
+  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
+</p>
+  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
+  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-- [🚀 Características](#-características)
-- [🏗️ Arquitectura](#️-arquitectura)
-- [📦 Instalación](#-instalación)
-- [⚙️ Configuración](#️-configuración)
-- [🗄️ Base de Datos](#️-base-de-datos)
-- [🔌 API Endpoints](#-api-endpoints)
-- [📖 Documentación](#-documentación)
-- [🧪 Testing](#-testing)
-- [🚀 Despliegue](#-despliegue)
-- [👥 Contribución](#-contribución)
+## Description
 
-## 🚀 Características
+[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-### 🔐 **Autenticación y Autorización**
-- Sistema de autenticación JWT
-- Control de acceso basado en roles (RBAC)
-- Gestión granular de permisos
-- Middleware de autenticación automático
+## Project setup
 
-### 👥 **Gestión de Usuarios**
-- Registro y login de usuarios
-- Perfiles de usuario personalizables
-- Asignación de roles y departamentos
-- Sistema de auditoría de usuarios
-
-### 📚 **Gestión Académica**
-- Administración de materias y niveles
-- Sistema de períodos académicos
-- Evaluaciones formativas y sumativas
-- Dimensiones de evaluación personalizables
-
-### 🏢 **Gestión Organizacional**
-- Manejo de departamentos institucionales
-- Gestión geográfica (provincias)
-- Relaciones entre usuarios y departamentos
-- Estructura organizacional jerárquica
-
-### 📊 **Sistema de Auditoría**
-- Registro completo de cambios
-- Trazabilidad de operaciones
-- Logs de actividad detallados
-- Histórico de modificaciones
-
-### 📧 **Comunicaciones**
-- Sistema de emails integrado
-- Notificaciones automáticas
-- Plantillas de comunicación
-- Gestión de términos y condiciones
-
-## 🏗️ Arquitectura
-
-El proyecto implementa **Clean Architecture** con las siguientes capas:
-
-```
-src/
-├── 🏢 modules/                 # Módulos de dominio
-│   ├── auth/                   # Autenticación
-│   ├── roles/                  # Gestión de roles
-│   ├── permissions/            # Permisos
-│   ├── subjects/               # Materias académicas
-│   ├── departments/            # Departamentos
-│   ├── provinces/              # Ubicaciones geográficas
-│   ├── periods/                # Períodos académicos
-│   ├── dimensions/             # Dimensiones de evaluación
-│   ├── emails/                 # Sistema de emails
-│   ├── audi-logs/             # Auditoría
-│   ├── terms_and_conditions/  # Términos legales
-│   └── user-roles/            # Relación usuarios-roles
-├── 🛡️ common/                  # Módulos compartidos
-│   ├── decorators/            # Decoradores personalizados
-│   ├── guards/                # Guards de autenticación
-│   └── strategies/            # Estrategias de autenticación
-└── 🗄️ database/               # Configuración de BD
-    ├── migrations/            # Migraciones
-    └── seeds/                 # Datos iniciales
-```
-
-### Patrón por Módulo:
-```
-module/
-├── 📁 application/
-│   ├── dtos/              # Data Transfer Objects
-│   ├── services/          # Servicios de aplicación
-│   └── use-cases/         # Casos de uso
-├── 📁 domain/
-│   ├── entities/          # Entidades de dominio
-│   └── interfaces/        # Contratos del dominio
-└── 📁 infrastructure/
-    ├── controllers/       # Controladores REST
-    └── repositories/      # Implementación de persistencia
-```
-
-## 📦 Instalación
-
-### 📋 Prerrequisitos
-
-- **Node.js** >= 18.0.0
-- **npm** >= 9.0.0
-- **PostgreSQL** >= 15.0
-- **Git**
-
-### 🔧 Configuración del Proyecto
-
-1. **Clonar el repositorio**
 ```bash
-git clone https://github.com/SerVeloper/cuaderno-pedagogico-backed.git
-cd cuaderno-pedagogico-backend
+$ npm install
 ```
 
-2. **Instalar dependencias**
+## Compile and run the project
+
 ```bash
-npm install
+$ npm run build
+
+# development
+$ npm run start
+
+# watch mode
+$ npm run start:dev
+
+# production mode
+$ npm run start:prod
 ```
 
-3. **Configurar variables de entorno**
+## Run tests
+
 ```bash
-cp .env.example .env
-# Editar .env con tus configuraciones
+# unit tests
+$ npm run test
+
+# e2e tests
+$ npm run test:e2e
+
+# test coverage
+$ npm run test:cov
 ```
 
-
-4. **Configurar base de datos**
+## Create migations
 ```bash
-# Crear base de datos en PostgreSQL
-createdb cuaderno_pedagogico
+# run migration just NestJS
+$ npx typeorm migration:create src/database/migrations/NombreDeLaMigracion
 
-# Ejecutar migraciones
+
+
+```
+## Run migrations
+```bash 
+$ npm run migration:run
+
+```
+## drop and run migrations
+```bash 
 npm run schema:drop && npm run migration:run
-
-# Ejecutar seeders (datos iniciales)
+```
+# run seed department
+```bash
 npm run seed:departments
 ```
 
-5. **Iniciar en modo desarrollo**
-```bash
-npm run start
-```
+## Deployment
 
-## ⚙️ Configuración
+When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
 
-### 🔐 Variables de Entorno
-
-Crea un archivo `.env` con las siguientes variables:
+If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
 
 ```bash
-# Base de Datos
-DB_TYPE=postgres
-DB_HOST=localhost
-DB_PORT=5432
-DB_USERNAME=postgres
-DB_PASSWORD=tu_password
-DB_DATABASE=cuaderno_pedagogico
-
-# API Configuration
-API_PREFIX=api
-API_VERSION=1
-APP_PORT=3000
-APP_NAME=Cuaderno Pedagógico API
-APP_DESCRIPTION=Sistema de gestión pedagógica para instituciones educativas
-
-# JWT Configuration
-JWT_SECRET=your-super-secret-jwt-key-change-in-production
-JWT_EXPIRES_IN=24h
-
-# Swagger Configuration
-SWAGGER_TITLE=Cuaderno Pedagógico API
-SWAGGER_DESCRIPTION=API RESTful para gestión integral de instituciones educativas
-SWAGGER_VERSION=1.0.0
-SWAGGER_PATH=api/docs
-
-# CORS Configuration
-FRONTEND_URL=http://localhost:4200
+$ npm install -g @nestjs/mau
+$ mau deploy
 ```
 
-## 🗄️ Base de Datos
+With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
 
-### 📊 Esquema de Base de Datos
+## Resources
 
-El sistema maneja las siguientes entidades principales:
+Check out a few resources that may come in handy when working with NestJS:
 
-- **👤 Users**: Usuarios del sistema
-- **🛡️ Roles**: Roles de usuario
-- **🔑 Permissions**: Permisos específicos
-- **🏢 Departments**: Departamentos organizacionales
-- **🌍 Provinces**: Ubicaciones geográficas
-- **📚 Subjects**: Materias académicas
-- **📅 Periods**: Períodos académicos
-- **📊 Dimensions**: Dimensiones de evaluación
-- **📧 Emails**: Sistema de comunicaciones
-- **📝 AudiLogs**: Registros de auditoría
-- **📋 TermsAndConditions**: Términos legales
+- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
+- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
+- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
+- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
+- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
+- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
+- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
+- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
 
-### 🔄 Migraciones
+## Support
 
-```bash
-# Crear nueva migración
-npx typeorm migration:create src/database/migrations/NombreDeLaMigracion
+Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
-# Ejecutar migraciones
-npm run migration:run
+## Stay in touch
 
-# Revertir última migración
-npm run migration:revert
+- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
+- Website - [https://nestjs.com](https://nestjs.com/)
+- Twitter - [@nestframework](https://twitter.com/nestframework)
 
-# Limpiar y recrear base de datos
-npm run schema:drop && npm run migration:run
-```
+## License
 
-### 🌱 Seeders
-
-```bash
-# Ejecutar seeder de departamentos
-npm run seed:departments
-
-# Ejecutar todos los seeders
-npm run seed
-```
-
-## 🔌 API Endpoints
-
-### 🌐 Base URL
-```
-http://localhost:3000/api/v1
-```
-
-### 🔐 Autenticación
-| Método | Endpoint | Descripción |
-|--------|----------|-------------|
-| POST | `/auth/register` | Registro de usuario |
-| POST | `/auth/login` | Inicio de sesión |
-
-### 👥 Usuarios y Roles
-| Método | Endpoint | Descripción |
-|--------|----------|-------------|
-| GET | `/users` | Listar usuarios |
-| GET | `/users/:id` | Obtener usuario |
-| PUT | `/users/:id` | Actualizar usuario |
-| DELETE | `/users/:id` | Eliminar usuario |
-| GET | `/roles` | Listar roles |
-| POST | `/roles` | Crear rol |
-
-### 📚 Gestión De E
-| Método | Endpoint | Descripción |
-|--------|----------|-------------|
-| GET | `/table` | Listar  |
-| POST | `/table` | Crear  |
-| GET | `/table/:id` | Obtener |
-| PUT | `/table/:id` | Actualizar  |
-| DELETE | `/table/:id` | Eliminar |
-
-
-### 📊 Sistema
-| Método | Endpoint | Descripción |
-|--------|----------|-------------|
-| GET | `/health` | Estado del sistema |
-| GET | `/audi-logs` | Logs de auditoría |
-
-## 📖 Documentación
-
-### 📚 Swagger UI
-
-La documentación interactiva está disponible en:
-
-```
-http://localhost:3000/api/docs
-```
-
-**Características de la documentación:**
-- 📖 Documentación completa de todos los endpoints
-- 🧪 Interfaz de pruebas interactiva
-- 🔐 Autenticación JWT integrada
-- 📋 Ejemplos de request/response
-- 🏷️ Organización por módulos con emojis
-- 📊 Esquemas de datos detallados
-
-### 🔗 Endpoints Importantes
-
-- **API Base**: `http://localhost:3000/api/v1`
-- **Swagger Docs**: `http://localhost:3000/api/docs`
-- **Health Check**: `http://localhost:3000/health`
-
-## 🧪 Testing
-
-### 🔧 Scripts de Testing
-
-```bash
-# Tests unitarios
-npm run test
-
-# Tests en modo watch
-npm run test:watch
-
-# Tests con coverage
-npm run test:cov
-
-# Tests end-to-end
-npm run test:e2e
-
-# Tests en modo debug
-npm run test:debug
-```
-
-### 📊 Coverage
-
-El proyecto mantiene un coverage mínimo del 80% en:
-- Casos de uso (Use Cases)
-- Servicios de aplicación
-- Repositorios
-- Controladores
-
-## 🚀 Despliegue
-
-### 🐳 Docker
-
-```bash
-# Construir imagen
-docker build -t cuaderno-pedagogico-api .
-
-# Ejecutar contenedor
-docker run -p 3000:3000 cuaderno-pedagogico-api
-```
-
-### 🌐 Producción
-
-```bash
-# Construir para producción
-npm run build
-
-# Ejecutar en producción
-npm run start:prod
-```
-
-### 📋 Checklist de Producción
-
-- [ ] Variables de entorno configuradas
-- [ ] JWT_SECRET seguro y único
-- [ ] Base de datos configurada
-- [ ] CORS configurado para dominio de producción
-- [ ] HTTPS habilitado
-- [ ] Logs configurados
-- [ ] Monitoring configurado
-
-## 🔧 Scripts Disponibles
-
-```bash
-# Desarrollo
-npm run start:dev          # Modo desarrollo con watch
-npm run start:debug        # Modo debug
-
-# Construcción
-npm run build              # Construir aplicación
-npm run start:prod         # Ejecutar en producción
-
-# Base de Datos
-npm run migration:run      # Ejecutar migraciones
-npm run schema:drop        # Limpiar esquema
-npm run seed:departments   # Ejecutar seeder de departamentos
-
-# Calidad de Código
-npm run lint              # Linter ESLint
-npm run format            # Formatear código con Prettier
-
-# Testing
-npm run test              # Tests unitarios
-npm run test:e2e          # Tests end-to-end
-npm run test:cov          # Coverage de tests
-```
-
-## 👥 Contribución
-
-### 🔄 Flujo de Trabajo
-
-1. **Fork del proyecto**
-2. **Crear rama feature**: `git checkout -b feature/nueva-funcionalidad`
-3. **Commit cambios**: `git commit -m 'Add: nueva funcionalidad'`
-4. **Push a la rama**: `git push origin feature/nueva-funcionalidad`
-5. **Crear Pull Request**
-
-### 📝 Convenciones
-
-- **Commits**: Usar [Conventional Commits](https://www.conventionalcommits.org/)
-- **Código**: Seguir estándares de TypeScript y NestJS
-- **Tests**: Mantener coverage mínimo del 80%
-- **Documentación**: Actualizar Swagger para nuevos endpoints
-
-### 🐛 Reportar Issues
-
-Usa las plantillas de GitHub Issues para:
-- 🐛 Bug reports
-- ✨ Feature requests
-- 📚 Mejoras de documentación
-
-## 📄 Licencia
-
-Este proyecto está bajo la Licencia MIT. Ver el archivo [LICENSE](LICENSE) para más detalles.
-
----
-
-<div align="center">
-  <p>Desarrollado con ❤️ por el equipo de Cuaderno Pedagógico</p>
-  <p>
-    <a href="mailto:dev@cuaderno-pedagogico.com">📧 Contacto</a> •
-    <a href="https://github.com/tu-usuario/cuaderno-pedagogico-backend/issues">🐛 Issues</a> •
-    <a href="https://github.com/tu-usuario/cuaderno-pedagogico-backend/wiki">📖 Wiki</a>
-  </p>
-</div>
+Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).

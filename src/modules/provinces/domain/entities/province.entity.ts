@@ -8,5 +8,6 @@ export class ProvinceEntity {
     public DepartmentId: number,
     public CreatedAt: Date,
     public UpdatedAt: Date,
+    public DeletedAt: Date
   ) {}
 }

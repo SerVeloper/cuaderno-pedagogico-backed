@@ -24,14 +24,15 @@ export class ProvinceRepository implements ProvincesRepositoryInterface {
       DepartmentId: domain.DepartmentId,
       CreatedAt: domain.CreatedAt,
       UpdatedAt: domain.UpdatedAt,
+      DeletedAt: domain.DeletedAt
     };
   }
 
   private toDomainEntity(entity: ProvinceOrmEntity): ProvinceEntity {
-    return new ProvinceEntity(entity.ProvinceId, entity.Name, entity.Description || '', entity.IsActive, entity.DepartmentId, entity.CreatedAt, entity.UpdatedAt);
+    return new ProvinceEntity(entity.ProvinceId, entity.Name, entity.Description || '', entity.IsActive, entity.DepartmentId, entity.CreatedAt, entity.UpdatedAt, entity.DeletedAt);
   }
 
-  async create(province: Omit<ProvinceEntity, 'ProvinceId' | 'CreatedAt' | 'UpdatedAt'>): Promise<ProvinceEntity> {
+  async create(province: Omit<ProvinceEntity, 'ProvinceId' | 'CreatedAt' | 'UpdatedAt' | 'DeletedAt'>): Promise<ProvinceEntity> {
     const department = await this.departmentRepo.findOne({ where: { DepartmentId: province.DepartmentId, IsActive: true } });
     if (!department) {
       throw new BadRequestException(`Department with ID ${province.DepartmentId} does not exist or is inactive`);
@@ -51,7 +52,7 @@ export class ProvinceRepository implements ProvincesRepositoryInterface {
     return entity ? this.toDomainEntity(entity) : null;
   }
 
-  async update(id: number, province: Partial<Omit<ProvinceEntity, 'ProvinceId' | 'CreatedAt' | 'UpdatedAt'>>): Promise<ProvinceEntity> {
+  async update(id: number, province: Partial<Omit<ProvinceEntity, 'ProvinceId' | 'CreatedAt' | 'UpdatedAt' | 'DeletedAt'>>): Promise<ProvinceEntity> {
     const updateData: Partial<ProvinceOrmEntity> = { ...this.toOrmEntity(province), UpdatedAt: new Date() };
     if (province.DepartmentId) {
       const department = await this.departmentRepo.findOne({ where: { DepartmentId: province.DepartmentId, IsActive: true } });
@@ -68,11 +69,11 @@ export class ProvinceRepository implements ProvincesRepositoryInterface {
     return updatedEntity;
   }
 
-  async delete(id: number, data: Partial<Omit<ProvinceEntity, 'ProvinceId' | 'Name' | 'Description' | 'DepartmentId' | 'CreatedAt' | 'UpdatedAt'>>): Promise<void> {
+  async delete(id: number, data: Partial<Omit<ProvinceEntity, 'ProvinceId' | 'Name' | 'Description' | 'DepartmentId' | 'CreatedAt' | 'UpdatedAt' | 'DeletedAt'>>): Promise<void> {
     const entity = await this.provinceRepo.findOne({ where: { ProvinceId: id, IsActive: true } });
     if (!entity) {
       throw new NotFoundException(`Province with ID ${id} not found`);
     }
-    await this.provinceRepo.update(id, { ...data, UpdatedAt: new Date() });
+    await this.provinceRepo.update(id, { ...data, UpdatedAt: new Date(), DeletedAt: new Date() });
   }
 }
