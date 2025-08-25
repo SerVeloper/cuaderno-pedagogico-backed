@@ -1,5 +1,6 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { EvaluationType } from '../../domain/entities/evaluation-type';
+import { LevelOrmEntity } from 'src/modules/levels/infrastructure/repositories/level.orm.entity';
 
 @Entity('subject')
 export class SubjectOrmEntity {
@@ -25,8 +26,7 @@ export class SubjectOrmEntity {
   @UpdateDateColumn({ name: 'UpdatedAt' })
   UpdatedAt: Date;
 
-  // Preparado para relación futura con Level
-  // @ManyToOne(() => LevelOrmEntity)
-  // @JoinColumn({ name: 'LevelId' })
-  // level: LevelOrmEntity;
+  @ManyToOne(() => LevelOrmEntity, (level) => level.LevelId, { nullable: false })
+  @JoinColumn({ name: 'LevelId', referencedColumnName: 'LevelId' })
+  level: LevelOrmEntity;
 }

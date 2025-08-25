@@ -15,7 +15,7 @@ import { PassportModule } from '@nestjs/passport';
 import { CommonModule } from './common/common.module';
 import { JwtModule } from '@nestjs/jwt';
 import { ProvincesModule } from './modules/provinces/province.module';
-import { LevelModule } from './levels/level.module';
+import { LevelModule } from './modules/levels/level.module';
 import { SubjectModule } from './modules/subject/subject.module';
 
 @Module({

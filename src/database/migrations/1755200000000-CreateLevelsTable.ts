@@ -34,6 +34,11 @@ export class CreateLevelsTable1755200000000 implements MigrationInterface {
             type: 'timestamp', 
             default: 'now()' 
           },
+          { 
+            name: 'DeletedAt', 
+            type: 'timestamp', 
+            isNullable: true 
+          },
         ],
       }),
     );
