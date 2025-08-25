@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, Index, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, Index, ManyToOne, JoinColumn } from 'typeorm';
 import { DepartmentOrmEntity } from '../../../departments/infraestructure/repositories/department.orm.entity';
 
 @Entity('provinces')
@@ -28,4 +28,7 @@ export class ProvinceOrmEntity {
 
   @UpdateDateColumn()
   UpdatedAt: Date;  
+
+  @DeleteDateColumn()
+  DeletedAt: Date;
 }
