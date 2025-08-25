@@ -46,6 +46,12 @@ export class CreateProvinceTable1754263751776 implements MigrationInterface {
             default: 'CURRENT_TIMESTAMP',
             onUpdate: 'CURRENT_TIMESTAMP',
           },
+          {
+            name: 'DeletedAt',
+            type: 'timestamp',
+            isNullable: true,
+            default: null,
+          },
         ],
       }),
       true,

@@ -27,6 +27,20 @@ export class CreateUserRoleTable1753796612677 implements MigrationInterface {
             default: 'now()',
           },
         ],
+        foreignKeys: [
+          {
+            columnNames: ['UserID'],
+            referencedTableName: 'users',
+            referencedColumnNames: ['UserID'],
+            onDelete: 'CASCADE',
+          },
+          {
+            columnNames: ['RoleID'],
+            referencedTableName: 'roles',
+            referencedColumnNames: ['RoleID'],
+            onDelete: 'CASCADE',
+          },
+        ],
       }),
     );
   }
