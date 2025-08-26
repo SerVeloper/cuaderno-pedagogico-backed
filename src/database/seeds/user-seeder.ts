@@ -4,18 +4,18 @@ import * as bcrypt from 'bcrypt';
 
 export class UserSeeder implements Seeder {
   public async run(dataSource: DataSource): Promise<void> {
-    // Verifica si los usuarios ya existen (requiere async/await por TypeORM)
-    const existingUsers = await dataSource.query(`
-      SELECT "UserID", "UserName" FROM "user" WHERE "UserName" IN ('Admin', 'user');
-    `);
-    console.log('Usuarios existentes antes de inserción:', existingUsers);
 
-    // Lista de usuarios con contraseñas hasheadas síncronamente
+    const existingUsers = await dataSource.query(`
+      SELECT "UserID", "UserName" FROM "users" WHERE "UserName" IN ('admin', 'user');
+    `);
+   // console.log('Usuarios existentes antes de inserción:', existingUsers);
+
+
     const users = [
       {
-        UserName: 'Admin',
+        UserName: 'admin',
         Email: 'admin@example.com',
-        PasswordHash: bcrypt.hashSync('admin123', 10), // Hasheo síncrono
+        PasswordHash: bcrypt.hashSync('admin123', 10), 
         FullName: 'Neloy Aravia',
         Phone: '1234567890',
         IsActive: true,
@@ -23,18 +23,18 @@ export class UserSeeder implements Seeder {
       {
         UserName: 'user',
         Email: 'johndoe@example.com',
-        PasswordHash: bcrypt.hashSync('user123', 10), // Hasheo síncrono
+        PasswordHash: bcrypt.hashSync('user123', 10), 
         FullName: 'John Doe',
         Phone: '0987654321',
         IsActive: true,
       },
     ];
 
-    console.log('Contraseñas hasheadas síncronamente para:', users.map(u => u.UserName));
+   // console.log('Contraseñas hasheadas síncronamente para:', users.map(u => u.UserName));
 
-    // Insertar usuarios (requiere async/await por TypeORM)
+
     const query = `
-      INSERT INTO "user" ("UserName", "Email", "PasswordHash", "FullName", "Phone", "IsActive")
+      INSERT INTO "users" ("UserName", "Email", "PasswordHash", "FullName", "Phone", "IsActive")
       VALUES 
         ($1, $2, $3, $4, $5, $6),
         ($7, $8, $9, $10, $11, $12)
@@ -62,7 +62,7 @@ export class UserSeeder implements Seeder {
 
     // Verifica usuarios después de inserción
     const usersAfter = await dataSource.query(`
-      SELECT "UserID", "UserName" FROM "user" WHERE "UserName" IN ('Admin', 'user');
+      SELECT "UserID", "UserName" FROM "users" WHERE "UserName" IN ('admin', 'user');
     `);
     console.log('Usuarios existentes después de inserción:', usersAfter);
   }

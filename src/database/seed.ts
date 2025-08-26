@@ -2,7 +2,7 @@ import { AppDataSource } from './data-source';
 import { UserSeeder } from './seeds/user-seeder';
 import { DepartmentSeeder } from './seeds/DepartmentSeeder';
 import { RoleSeeder } from './seeds/roles-seeder';
-//import { UserRolesSeeder } from './seeds/user-roles-seeder';
+import { UserRolesSeeder } from './seeds/user-roles-seeder';
 
 // Hacer que runSeeders sea una función async
 async function runSeeders() {
@@ -15,7 +15,7 @@ async function runSeeders() {
       { seeder: new UserSeeder(), name: 'UserSeeder' },
       { seeder: new DepartmentSeeder(), name: 'DepartmentSeeder' },
       { seeder: new RoleSeeder(), name: 'RoleSeeder' },
-      // { seeder: new UserRolesSeeder(), name: 'UserRolesSeeder' },
+      { seeder: new UserRolesSeeder(), name: 'UserRolesSeeder' },
     ];
 
     // Usar await en el bucle para esperar a que cada seeder termine
