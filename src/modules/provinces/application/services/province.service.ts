@@ -7,6 +7,7 @@ import { FindAllProvincesUseCase } from '../use-cases/find-all-province.use-case
 import { FindProvinceByIdUseCase } from '../use-cases/find-by-id-province.use-case';
 import { UpdateProvinceUseCase } from '../use-cases/update-province.use-case';
 import { DeleteProvinceUseCase } from '../use-cases/delete-province.use-case';
+import { FindByDepartmentIdUseCase } from '../use-cases/find-by-department-id.use-case';
 
 @Injectable()
 export class ProvinceService {
@@ -21,6 +22,8 @@ export class ProvinceService {
     private readonly updateProvinceUseCase: UpdateProvinceUseCase,
     @Inject('DeleteProvinceUseCase')
     private readonly deleteProvinceUseCase: DeleteProvinceUseCase,
+    @Inject('FindByDepartmentIdUseCase')
+    private readonly findByDepartmentIdUseCase: FindByDepartmentIdUseCase,
   ) {}
 
   async create(createProvinceDto: CreateProvinceDto): Promise<ProvinceEntity> {
@@ -41,5 +44,9 @@ export class ProvinceService {
 
   async delete(id: number): Promise<void> {
     return this.deleteProvinceUseCase.execute(id);
+  }
+
+  async findByDepartmentId(departmentId: number): Promise<ProvinceEntity[]> {
+    return this.findByDepartmentIdUseCase.execute(departmentId);
   }
 }

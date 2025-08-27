@@ -66,4 +66,13 @@ export class ProvinceController {
   async delete(@Param('id', ParseIntPipe) id: number): Promise<void> {
     return this.provinceService.delete(id);
   }
+
+  @Get('by-department/:departmentId')
+  @ApiOperation({ summary: 'Get provinces by Department ID' })
+  @ApiResponse({ status: 200, description: 'List of provinces retrieved successfully', type: [ProvinceEntity] })
+  @ApiResponse({ status: 400, description: 'Invalid Department ID' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  async findByDepartmentId(@Param('departmentId', ParseIntPipe) departmentId: number) : Promise<ProvinceEntity[]> {
+    return this.provinceService.findByDepartmentId(departmentId);
+  }
 }

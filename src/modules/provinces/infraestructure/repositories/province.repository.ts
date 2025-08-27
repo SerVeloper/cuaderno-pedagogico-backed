@@ -76,4 +76,13 @@ export class ProvinceRepository implements ProvincesRepositoryInterface {
     }
     await this.provinceRepo.update(id, { ...data, UpdatedAt: new Date(), DeletedAt: new Date() });
   }
+
+  async findByDepartmentId(departmentId: number): Promise<ProvinceEntity[]> {
+    const department = await this.departmentRepo.findOne({ where: { DepartmentId: departmentId, IsActive: true } });
+    if (!department) {
+      throw new BadRequestException(`Department with ID ${departmentId} does not exist or is inactive`);
+    }
+    const entities = await this.provinceRepo.find({ where: { DepartmentId: departmentId, IsActive: true } });
+    return entities.map((entity) => this.toDomainEntity(entity));
+  }
 }
