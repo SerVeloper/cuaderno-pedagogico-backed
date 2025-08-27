@@ -11,6 +11,7 @@ import { FindAllProvincesUseCase } from './application/use-cases/find-all-provin
 import { FindProvinceByIdUseCase } from './application/use-cases/find-by-id-province.use-case';
 import { UpdateProvinceUseCase } from './application/use-cases/update-province.use-case';
 import { DeleteProvinceUseCase } from './application/use-cases/delete-province.use-case';
+import { FindByDepartmentIdUseCase } from './application/use-cases/find-by-department-id.use-case';
 
 @Module({
   controllers: [ProvinceController],
@@ -22,6 +23,7 @@ import { DeleteProvinceUseCase } from './application/use-cases/delete-province.u
     { provide: 'UpdateProvinceUseCase', useClass: UpdateProvinceUseCase },
     { provide: 'DeleteProvinceUseCase', useClass: DeleteProvinceUseCase },
     { provide: 'ProvincesRepositoryInterface', useClass: ProvinceRepository },
+    { provide: 'FindByDepartmentIdUseCase', useClass: FindByDepartmentIdUseCase },
     { provide: 'DepartmentsRepositoryInterface', useClass: DepartmentRepository },
   ],
   imports: [
