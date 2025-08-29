@@ -17,6 +17,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { ProvincesModule } from './modules/provinces/province.module';
 import { LevelModule } from './modules/levels/level.module';
 import { SubjectModule } from './modules/subject/subject.module';
+import { StudentModule } from './modules/student/student.modules';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { SubjectModule } from './modules/subject/subject.module';
     PeriodModule,
     UserRoleModule,
     AudiLogModule,
+    StudentModule,
     DimensionModule,
     PassportModule.register({ defaultStrategy: 'jwt' }),
     CommonModule,
