@@ -7,5 +7,6 @@ export class DepartmentEntity {
     public IsActive: boolean,
     public CreatedAt: Date,
     public UpdatedAt: Date,
+    public DeletedAt: Date
   ) {}
 }

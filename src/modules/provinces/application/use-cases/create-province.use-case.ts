@@ -21,7 +21,7 @@ export class CreateProvinceUseCase {
     const newProvince = {
       Name: createProvinceDto.Name,
       Description: createProvinceDto.Description ?? '',
-      IsActive: createProvinceDto.IsActive,
+      IsActive: createProvinceDto.IsActive ?? true,
       DepartmentId: createProvinceDto.DepartmentId,
     };
 

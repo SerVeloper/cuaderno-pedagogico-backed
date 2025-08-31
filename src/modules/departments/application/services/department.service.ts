@@ -1,31 +1,44 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { DepartmentsRepositoryInterface } from '../../domain/interfaces/department.repository.interface';
 import { DepartmentEntity } from '../../domain/entities/department.entity';
-
+import { CreateDepartmentDto } from '../dtos/create-department.dto';
+import { UpdateDepartmentDto } from '../dtos/update-department.dto';
+import { CreateDepartmentUseCase } from '../use-cases/create-department.use-case';
+import { FindAllDepartmentsUseCase } from '../use-cases/find-all-departments.use-case';
+import { FindByIdDepartmentUseCase } from '../use-cases/find-by-id-department.use-case';
+import { UpdateDepartmentUseCase } from '../use-cases/update-department.use-case';
+import { DeleteDepartmentUseCase } from '../use-cases/delete-department.use-case';
 @Injectable()
 export class DepartmentService {
   constructor(
-    @Inject('DepartmentsRepositoryInterface')
-    private readonly departmentRepositoryInterface: DepartmentsRepositoryInterface,
+    @Inject('CreateDepartmentUseCase')
+    private readonly createDepartmentUseCase: CreateDepartmentUseCase,
+    @Inject('FindAllDepartmentsUseCase')
+    private readonly findAllDepartmentsUseCase: FindAllDepartmentsUseCase,
+    @Inject('FindByIdDepartmentUseCase')
+    private readonly findByIdDepartmentUseCase: FindByIdDepartmentUseCase,
+    @Inject('UpdateDepartmentUseCase')
+    private readonly updateDepartmentUseCase: UpdateDepartmentUseCase,
+    @Inject('DeleteDepartmentUseCase')
+    private readonly deleteDepartmentUseCase: DeleteDepartmentUseCase,
   ) {}
 
-  async create(departmentEntity: DepartmentEntity): Promise<DepartmentEntity> {
-    return this.departmentRepositoryInterface.create(departmentEntity);
+  async create(createDepartmentDto: CreateDepartmentDto): Promise<DepartmentEntity> {
+    return this.createDepartmentUseCase.execute(createDepartmentDto);
   }
 
   async findAll(): Promise<DepartmentEntity[]> {
-    return this.departmentRepositoryInterface.findAll();
+    return this.findAllDepartmentsUseCase.execute();
   }
 
   async findById(id: number): Promise<DepartmentEntity | null> {
-    return this.departmentRepositoryInterface.findById(id);
+    return this.findByIdDepartmentUseCase.execute(id);
   }
 
-  async update(id: number, departmentEntity: DepartmentEntity): Promise<DepartmentEntity> {
-    return this.departmentRepositoryInterface.update(id, departmentEntity);
+  async update(id: number, updateDepartmentDto: UpdateDepartmentDto): Promise<DepartmentEntity> {
+    return this.updateDepartmentUseCase.execute(id, updateDepartmentDto);
   }
 
   async delete(id: number): Promise<void> {
-    return this.departmentRepositoryInterface.delete(id);
+    return this.deleteDepartmentUseCase.execute(id);
   }
 }

@@ -8,19 +8,19 @@ import { UpdateProvinceDto } from '../dtos/update-province.dto';
 export class UpdateProvinceUseCase {
   constructor(
     @Inject('ProvincesRepositoryInterface')
-    private readonly provincesRepository: ProvincesRepositoryInterface,
+    private readonly provincesRepositoryInterface: ProvincesRepositoryInterface,
     @Inject('DepartmentsRepositoryInterface')
-    private readonly departmentsRepository: DepartmentsRepositoryInterface,
+    private readonly departmentsRepositoryInterface: DepartmentsRepositoryInterface,
   ) {}
 
   async execute(id: number, updateProvinceDto: UpdateProvinceDto): Promise<ProvinceEntity> {
-    const existingProvince = await this.provincesRepository.findById(id);
+    const existingProvince = await this.provincesRepositoryInterface.findById(id);
     if (!existingProvince) {
-      throw new NotFoundException('Province with ID ${id} not found.');
+      throw new NotFoundException(`Province with ID ${id} not found.`);
     }
 
     if (updateProvinceDto.DepartmentId !== undefined) {
-      const department = await this.departmentsRepository.findById(updateProvinceDto.DepartmentId);
+      const department = await this.departmentsRepositoryInterface.findById(updateProvinceDto.DepartmentId);
       if (!department) {
         throw new BadRequestException('Department with ID ${updateProvinceDto.DepartmentId} does not exist.');
       }
@@ -34,7 +34,7 @@ export class UpdateProvinceUseCase {
     };
 
     try {
-      return await this.provincesRepository.update(id, province);
+      return await this.provincesRepositoryInterface.update(id, province);
     } catch (error) {
       if (error instanceof Error && (error.message.includes('ER_NO_REFERENCED_ROW') || error.message.includes('23503'))) {
         throw new BadRequestException(`Department with ID ${updateProvinceDto.DepartmentId} does not exist`);

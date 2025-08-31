@@ -37,6 +37,11 @@ export class CreateDepartmentTable1751838391958 implements MigrationInterface {
             type: 'timestamp', 
             default: 'now()' 
           },
+          { name: 'DeletedAt', 
+            type: 'timestamp', 
+            isNullable: true, 
+            default: null 
+          },
         ],
       }),
     );

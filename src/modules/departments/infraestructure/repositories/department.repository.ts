@@ -1,7 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-
 import { DepartmentOrmEntity } from './department.orm.entity';
 import { DepartmentsRepositoryInterface } from '../../domain/interfaces/department.repository.interface';
 import { DepartmentEntity } from '../../domain/entities/department.entity';
@@ -13,7 +12,7 @@ export class DepartmentRepository implements DepartmentsRepositoryInterface {
     private readonly repository: Repository<DepartmentOrmEntity>,
   ) {}
 
-  private toOrmEntity(domain: DepartmentEntity): Partial<DepartmentOrmEntity> {
+  private toOrmEntity(domain: Partial<DepartmentEntity>): Partial<DepartmentOrmEntity> {
     return {
       DepartmentId: domain.DepartmentId,
       Name: domain.Name,
@@ -21,6 +20,7 @@ export class DepartmentRepository implements DepartmentsRepositoryInterface {
       IsActive: domain.IsActive ?? true,
       CreatedAt: domain.CreatedAt,
       UpdatedAt: domain.UpdatedAt,
+      DeletedAt: domain.DeletedAt
     };
   }
 
@@ -28,15 +28,16 @@ export class DepartmentRepository implements DepartmentsRepositoryInterface {
     return new DepartmentEntity(
       entity.DepartmentId,
       entity.Name,
-      entity.Description,
-      entity.IsActive,
+      entity.Description || '',
+      entity.IsActive ?? true,
       entity.CreatedAt,
       entity.UpdatedAt,
+      entity.DeletedAt
     );
   }
 
-  async create(department: DepartmentEntity): Promise<DepartmentEntity> {
-    const entity = this.toOrmEntity(department);
+  async create(department: Omit<DepartmentEntity, 'DepartmentId' | 'CreatedAt' | 'UpdatedAt' | 'DeletedAt'>): Promise<DepartmentEntity> {
+    const entity = this.repository.create(department);
     const savedEntity = await this.repository.save(entity);
     return this.toDomainEntity(savedEntity);
   }
@@ -51,19 +52,25 @@ export class DepartmentRepository implements DepartmentsRepositoryInterface {
     return entity ? this.toDomainEntity(entity) : null;
   }
 
-  async update(id: number, departmentEntity: DepartmentEntity): Promise<DepartmentEntity> {
-    await this.repository.update(id, this.toOrmEntity(departmentEntity));
-    const updateEntity = await this.repository.findOne({ where: { DepartmentId: id } });
-    if (!updateEntity) {
-      throw new NotFoundException(`Department with ID ${id} not found `);
+  async update(id: number, department: Partial<Omit<DepartmentEntity, 'DepartmentId' | 'CreatedAt' | 'UpdatedAt' | 'DeletedAt'>>): Promise<DepartmentEntity> {
+    const entity = await this.repository.findOne({ where: { DepartmentId: id, IsActive: true } });
+    if (!entity) {
+      throw new NotFoundException(`Department with ID ${id} not found`);
     }
-    return this.toDomainEntity(updateEntity);
+    const updateData: Partial<DepartmentOrmEntity> = { ...this.toOrmEntity(department), UpdatedAt: new Date() };
+    await this.repository.update(id, updateData);
+    const updatedEntity = await this.findById(id);
+    if (!updatedEntity) {
+      throw new NotFoundException(`Department with ID ${id} not found after update`);
+    }
+    return updatedEntity;
   }
 
-  async delete(id: number): Promise<void> {
-    const department = await this.repository.findOne({ where: { DepartmentId: id, IsActive: true } });
-    if (!department) throw new NotFoundException(`Department with ID ${id} not found`);
-    department.IsActive = false;
-    await this.repository.save(department);
+  async delete(id: number, data: Partial<Omit<DepartmentEntity, 'CreatedAt' | 'UpdatedAt' | 'DeletedAt'>>): Promise<void> {
+    const entity = await this.repository.findOne({ where: { DepartmentId: id, IsActive: true } });
+    if (!entity) {
+      throw new NotFoundException(`Department with ID ${id} not found`);
+    }
+    await this.repository.update(id, { ...data, UpdatedAt: new Date(), DeletedAt: new Date() });
   }
 }

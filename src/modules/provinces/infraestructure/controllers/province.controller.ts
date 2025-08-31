@@ -28,6 +28,7 @@ export class ProvinceController {
   }
 
   @Get()
+  @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Get all provinces' })
   @ApiResponse({ status: 200, description: 'List of provinces retrieved successfully', type: [ProvinceEntity] })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
@@ -36,6 +37,7 @@ export class ProvinceController {
   }
 
   @Get(':id')
+  @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Get province by ID' })
   @ApiResponse({ status: 200, description: 'Province found', type: ProvinceEntity })
   @ApiResponse({ status: 404, description: 'Province not found' })
@@ -45,6 +47,7 @@ export class ProvinceController {
   }
 
   @Put(':id')
+  @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Update province by ID' })
   @ApiResponse({ status: 200, description: 'Province updated successfully', type: ProvinceEntity })
   @ApiResponse({ status: 400, description: 'Invalid input data' })
@@ -52,7 +55,7 @@ export class ProvinceController {
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   async update(
     @Param('id', ParseIntPipe) id: number, 
-    @Body() dto: UpdateProvinceDto
+    @Body() dto: UpdateProvinceDto 
   ): Promise<ProvinceEntity> {
     return this.provinceService.update(id, dto);
   }
