@@ -1,47 +1,72 @@
-import { Controller, Get, Post, Put, Delete, Body, Param, ParseIntPipe } from '@nestjs/common';
-
+import { Controller, Get, Post, Put, Delete, Body, Param, ParseIntPipe, HttpCode, HttpStatus } from '@nestjs/common';
 import { CreateDepartmentDto } from '../../application/dtos/create-department.dto';
 import { UpdateDepartmentDto } from '../../application/dtos/update-department.dto';
+import { DepartmentEntity } from '../../domain/entities/department.entity';
+import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { DepartmentService } from '../../application/services/department.service';
 
-import { CreateDepartmentUseCase } from '../../application/use-cases/create-department.use-case';
-import { FindAllDepartmentsUseCase } from '../../application/use-cases/find-all-departments.use-case';
-import { FindOneDepartmentUseCase } from '../../application/use-cases/find-one-department.use-case';
-import { UpdateDepartmentUseCase } from '../../application/use-cases/update-department.use-case';
-import { DeleteDepartmentUseCase } from '../../application/use-cases/delete-department.use-case';
-
-@Controller('departments')
+@ApiTags('departments')
+@ApiBearerAuth()
+@Controller({
+  path: 'departments',
+  version: '1'
+})
 export class DepartmentController {
   constructor(
-    private readonly createDepartment: CreateDepartmentUseCase,
-    private readonly findAllDepartments: FindAllDepartmentsUseCase,
-    private readonly findOneDepartment: FindOneDepartmentUseCase,
-    private readonly updateDepartment: UpdateDepartmentUseCase,
-    private readonly deleteDepartment: DeleteDepartmentUseCase,
+    private readonly departmentService: DepartmentService
   ) {}
 
   @Post()
-  create(@Body() dto: CreateDepartmentDto) {
-    return this.createDepartment.execute(dto);
+  @HttpCode(HttpStatus.CREATED)
+  @ApiOperation({ summary: 'Create a new department' })
+  @ApiResponse({ status: 201, description: 'Department created successfully', type: DepartmentEntity })
+  @ApiResponse({ status: 400, description: 'Invalid input data' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  async create(@Body() dto: CreateDepartmentDto) : Promise<DepartmentEntity> {
+    return this.departmentService.create(dto);
   }
 
   @Get()
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Get all departments' })
+  @ApiResponse({ status: 200, description: 'List of departments retrieved successfully', type: [DepartmentEntity] })
+  @ApiResponse({ status: 404, description: 'Departments not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   findAll() {
-    return this.findAllDepartments.execute();
+    return this.departmentService.findAll();
   }
 
   @Get(':id')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Get department by ID' })
+  @ApiResponse({ status: 200, description: 'Department found', type: DepartmentEntity })
+  @ApiResponse({ status: 404, description: 'Department not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.findOneDepartment.execute(id);
+    return this.departmentService.findById(id);
   }
 
   @Put(':id')
-  async update(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateDepartmentDto) {
-    console.log('Updating department with ID:', id, 'with data:', dto);
-    return this.updateDepartment.execute(id, dto);
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Update department by ID' })
+  @ApiResponse({ status: 200, description: 'Department updated successfully', type: DepartmentEntity })
+  @ApiResponse({ status: 400, description: 'Invalid input data' })
+  @ApiResponse({ status: 404, description: 'Department not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  async update(
+    @Param('id', ParseIntPipe) id: number, 
+    @Body() dto: UpdateDepartmentDto
+  ): Promise<DepartmentEntity> {
+    return this.departmentService.update(id, dto);
   }
 
   @Delete(':id')
-  delete(@Param('id', ParseIntPipe) id: number) {
-    return this.deleteDepartment.execute(id);
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiOperation({ summary: 'Delete department by ID' })
+  @ApiResponse({ status: 204, description: 'Department deleted successfully' })
+  @ApiResponse({ status: 404, description: 'Department not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  async delete(@Param('id', ParseIntPipe) id: number) : Promise<void> {
+    return this.departmentService.delete(id);
   }
 }

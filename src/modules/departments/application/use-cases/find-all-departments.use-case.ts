@@ -1,13 +1,18 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject, BadRequestException } from '@nestjs/common';
 import { DepartmentEntity } from '../../domain/entities/department.entity';
-import { DepartmentService } from '../services/department.service';
+import { DepartmentsRepositoryInterface } from '../../domain/interfaces/department.repository.interface';
 @Injectable()
 export class FindAllDepartmentsUseCase {
   constructor(
-    private readonly departmentService: DepartmentService,
+    @Inject('DepartmentsRepositoryInterface')
+    private readonly departmentRepositoryInterface: DepartmentsRepositoryInterface,
   ) {}
 
   async execute(): Promise<DepartmentEntity[]> {
-    return this.departmentService.findAll();
+    try {
+      return await this.departmentRepositoryInterface.findAll();
+    } catch (error) {
+      throw new BadRequestException(`Failed to retrieve departments: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
   }
 }

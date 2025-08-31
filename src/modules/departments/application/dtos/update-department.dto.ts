@@ -1,15 +1,28 @@
-import { IsString, IsOptional, IsBoolean } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsString, IsOptional, IsBoolean, MaxLength } from 'class-validator';
 
 export class UpdateDepartmentDto {
+  @ApiProperty({
+    name: 'Name',
+    example: 'Chuquisaca',
+    maxLength: 100,
+  })
   @IsOptional()
   @IsString()
-  name?: string;
+  @MaxLength(100)
+  Name?: string;
 
+  @ApiProperty({
+    name: 'Description',
+    example: 'Department of Chuquisaca',
+    maxLength: 250,
+  })
   @IsOptional()
   @IsString()
-  description?: string;
+  @MaxLength(250)
+  Description?: string;
 
   @IsOptional()
   @IsBoolean()
-  isActive?: boolean;
+  IsActive?: boolean;
 }

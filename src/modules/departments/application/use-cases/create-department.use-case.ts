@@ -1,24 +1,25 @@
-import { Injectable } from '@nestjs/common';
-import { DepartmentService } from '../services/department.service';
+import { Injectable, Inject, BadRequestException } from '@nestjs/common';
 import { CreateDepartmentDto } from '../dtos/create-department.dto';
 import { DepartmentEntity } from '../../domain/entities/department.entity';
-
+import { DepartmentsRepositoryInterface } from '../../domain/interfaces/department.repository.interface';
 @Injectable()
 export class CreateDepartmentUseCase {
   constructor(
-    private readonly departmentService: DepartmentService,
+    @Inject('DepartmentsRepositoryInterface')
+    private readonly departmentRepository: DepartmentsRepositoryInterface,
   ) {}
 
   async execute( createDepartmentDto: CreateDepartmentDto): Promise<DepartmentEntity> {
-    const newDepartment = new DepartmentEntity(
-      0,
-      createDepartmentDto.Name,
-      createDepartmentDto.Description ?? '',
-      createDepartmentDto.IsActive ?? true,
-      new Date(),
-      new Date(),
-    );
+    const newDepartment = {
+      Name: createDepartmentDto.Name,
+      Description: createDepartmentDto.Description ?? '',
+      IsActive: createDepartmentDto.IsActive ?? true,
+    };
 
-    return await this.departmentService.create(newDepartment);
+    try {
+      return await this.departmentRepository.create(newDepartment);
+    } catch (error) {
+      throw new BadRequestException(`Failed to create department: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
   }
 }

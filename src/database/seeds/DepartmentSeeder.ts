@@ -16,5 +16,7 @@ export class DepartmentSeeder implements Seeder {
     ];
 
     await dataSource.createQueryBuilder().insert().into('departments').values(departments).orIgnore().execute();
+    await dataSource.query(`SELECT setval('"departments_DepartmentId_seq"', (SELECT MAX("DepartmentId") FROM departments))`);
+
   }
 }

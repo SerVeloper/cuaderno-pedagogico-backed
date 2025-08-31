@@ -29,7 +29,15 @@ export class ProvinceRepository implements ProvincesRepositoryInterface {
   }
 
   private toDomainEntity(entity: ProvinceOrmEntity): ProvinceEntity {
-    return new ProvinceEntity(entity.ProvinceId, entity.Name, entity.Description || '', entity.IsActive, entity.DepartmentId, entity.CreatedAt, entity.UpdatedAt, entity.DeletedAt);
+    return new ProvinceEntity(
+      entity.ProvinceId, 
+      entity.Name, 
+      entity.Description || '', 
+      entity.IsActive ?? true, 
+      entity.DepartmentId, 
+      entity.CreatedAt, 
+      entity.UpdatedAt, 
+      entity.DeletedAt);
   }
 
   async create(province: Omit<ProvinceEntity, 'ProvinceId' | 'CreatedAt' | 'UpdatedAt' | 'DeletedAt'>): Promise<ProvinceEntity> {

@@ -9,7 +9,7 @@ export class FindProvinceByIdUseCase {
     private readonly provinceRepositoryInterface: ProvincesRepositoryInterface,
   ) {}
 
-  async execute(id: number): Promise<ProvinceEntity> {
+  async execute(id: number): Promise<ProvinceEntity | null> {
     const province = await this.provinceRepositoryInterface.findById(id);
     if (!province) {
       throw new NotFoundException(`Province with ID ${id} not found`);
