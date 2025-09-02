@@ -1,8 +1,6 @@
-import { IsString,IsNumber, IsOptional, MaxLength, IsEnum } from 'class-validator';
+import { IsString, IsNumber, IsOptional, MaxLength, IsEnum } from 'class-validator';
 import { Gender } from '../../domain/entities/gender';
 import { ApiProperty } from '@nestjs/swagger';
-
-
 
 export class UpdateStudentDto {
   @IsOptional()
