@@ -1,5 +1,5 @@
-import { IsNotEmpty, IsString, MaxLength, IsBoolean, IsNumber, IsEnum } from 'class-validator';
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { IsNotEmpty, IsString, MaxLength, IsNumber, IsEnum } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 import { Gender } from '../../domain/entities/gender';
 export class CreateStudentDto {
   @ApiProperty({
