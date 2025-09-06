@@ -1,15 +1,18 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { LevelService } from '../services/level.service';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { LevelRepositoryInterface } from '../../domain/interfaces/level.repository.interface';
 
 @Injectable()
 export class DeleteLevelUseCase {
-  constructor(private readonly levelService: LevelService) {}
+  constructor(
+    @Inject('LevelRepositoryInterface')
+    private readonly levelRepository: LevelRepositoryInterface,
+  ) {}
 
   async execute(id: number): Promise<void> {
-    const level = await this.levelService.findById(id);
+    const level = await this.levelRepository.findById(id);
     if (!level) {
       throw new NotFoundException(`Level with ID ${id} not found`);
     }
-    await this.levelService.delete(id);
+    await this.levelRepository.delete(id);
   }
 }

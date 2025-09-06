@@ -1,16 +1,19 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, Inject } from '@nestjs/common';
 import { LevelEntity } from '../../domain/entities/level.entity';
-import { LevelService } from '../services/level.service';
+import { LevelRepositoryInterface } from '../../domain/interfaces/level.repository.interface';
 
 @Injectable()
 export class FindByIdLevelUseCase {
-  constructor(private readonly levelService: LevelService) {}
+  constructor(
+    @Inject('LevelRepositoryInterface')
+    private readonly levelRepository: LevelRepositoryInterface,
+  ) {}
 
   async execute(id: number): Promise<LevelEntity | null> {
-    const level = await this.levelService.findById(id);
+    const level = await this.levelRepository.findById(id);
     if (!level) {
       throw new NotFoundException(`Level with ID ${id} not found`);
     }
-    return this.levelService.findById(id);
+    return this.levelRepository.findById(id);
   }
 }

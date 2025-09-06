@@ -1,12 +1,13 @@
-import { Injectable } from '@nestjs/common';
-import { LevelService } from '../services/level.service';
+import { Injectable, Inject } from '@nestjs/common';
+import { LevelRepositoryInterface } from '../../domain/interfaces/level.repository.interface';
 import { CreateLevelDto } from '../dtos/create-level.dto';
 import { LevelEntity } from '../../domain/entities/level.entity';
 
 @Injectable()
 export class CreateLevelUseCase {
   constructor(
-    private readonly levelService: LevelService,
+    @Inject('LevelRepositoryInterface')
+    private readonly levelRepository: LevelRepositoryInterface,
   ) {}
 
   async execute(createLevelDto: CreateLevelDto): Promise<LevelEntity> {
@@ -19,6 +20,6 @@ export class CreateLevelUseCase {
       null
     );
 
-    return await this.levelService.create(newLevel);
+    return await this.levelRepository.create(newLevel);
   }
 }
