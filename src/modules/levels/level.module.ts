@@ -17,16 +17,13 @@ import { LevelController } from './infrastructure/controllers/level.controller';
   controllers: [LevelController],
   providers: [
     LevelService,
-    {
-      provide: 'LevelRepositoryInterface',
-      useClass: LevelRepository
-    },
-    CreateLevelUseCase,
-    FindAllLevelsUseCase,
-    FindByIdLevelUseCase,
-    UpdateLevelUseCase,
-    DeleteLevelUseCase
+    { provide: 'LevelRepositoryInterface', useClass: LevelRepository },
+    { provide: 'CreateLevelUseCase', useClass: CreateLevelUseCase },
+    { provide: 'FindAllLevelsUseCase', useClass: FindAllLevelsUseCase },
+    { provide: 'FindByIdLevelUseCase', useClass: FindByIdLevelUseCase },
+    { provide: 'UpdateLevelUseCase', useClass: UpdateLevelUseCase },
+    { provide: 'DeleteLevelUseCase', useClass: DeleteLevelUseCase },
   ],
-  exports: [LevelService, 'LevelRepositoryInterface']
+  exports: [LevelService]
 })
 export class LevelModule {}

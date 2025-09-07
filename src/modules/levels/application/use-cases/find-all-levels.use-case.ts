@@ -1,14 +1,14 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { LevelEntity } from '../../domain/entities/level.entity';
-import { LevelService } from '../services/level.service';
-
+import { LevelRepositoryInterface } from '../../domain/interfaces/level.repository.interface';
 @Injectable()
 export class FindAllLevelsUseCase {
   constructor(
-    private readonly levelService: LevelService,
+    @Inject('LevelRepositoryInterface')
+    private readonly levelRepository: LevelRepositoryInterface,
   ) {}
 
   async execute(): Promise<LevelEntity[]> {
-    return this.levelService.findAll();
+    return this.levelRepository.findAll();
   }
 }

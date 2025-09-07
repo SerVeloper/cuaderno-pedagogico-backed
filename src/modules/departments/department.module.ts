@@ -13,16 +13,12 @@ import { DepartmentOrmEntity } from './infraestructure/repositories/department.o
   controllers: [DepartmentController],
   providers: [
     DepartmentService,
-    {
-      provide: 'DepartmentsRepositoryInterface',
-      useClass: DepartmentRepository
-    },
+    { provide: 'DepartmentsRepositoryInterface', useClass: DepartmentRepository },
     { provide: 'CreateDepartmentUseCase', useClass: CreateDepartmentUseCase },
     { provide: 'FindAllDepartmentsUseCase', useClass: FindAllDepartmentsUseCase },
     { provide: 'FindByIdDepartmentUseCase', useClass: FindByIdDepartmentUseCase },
     { provide: 'UpdateDepartmentUseCase', useClass: UpdateDepartmentUseCase },
     { provide: 'DeleteDepartmentUseCase', useClass: DeleteDepartmentUseCase },
-    { provide: 'DepartmentRepositoryInterface', useClass: DepartmentRepository }
   ],
   imports: [
     TypeOrmModule.forFeature([DepartmentOrmEntity])
